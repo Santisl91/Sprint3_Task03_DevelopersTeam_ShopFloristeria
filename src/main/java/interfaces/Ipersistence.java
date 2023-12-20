@@ -1,7 +1,9 @@
 package interfaces;
 
+import entities.Shop;
+
+import java.io.*;
+
 public interface Ipersistence {
-	public void guardarBd();
-	public void leerBd();
 
 }
