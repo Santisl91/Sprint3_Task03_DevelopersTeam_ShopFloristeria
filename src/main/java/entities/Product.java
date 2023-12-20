@@ -5,12 +5,13 @@ public class Product {
     private int id;
     private String tipo;
     private static int contador = 1;
-    
+    private double price;
+
     public String getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(String tipo) {
+  public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
 
@@ -39,4 +40,9 @@ public class Product {
     public String toString() {
         return name;
     }
+
+    public double getPrice() {
+        return price;
+    }
+
 }
