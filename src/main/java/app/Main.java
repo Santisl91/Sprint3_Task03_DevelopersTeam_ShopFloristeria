@@ -3,13 +3,13 @@ package app;
 import entities.Catalogue;
 import entities.Product;
 import entities.ProductItemFactory;
-import entities.Stock;
 import entities.Ticket;
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
         Shop shop = Shop.getInstance();
         Scanner scanner = new Scanner(System.in);
         crearFloristeria(shop);

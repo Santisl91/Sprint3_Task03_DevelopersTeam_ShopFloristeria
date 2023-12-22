@@ -4,6 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Stock {
+
+    private static Stock instance;
+
+    private Stock() {
+        // Constructor privado
+    }
+
+    public static Stock getInstance() {
+        if (instance == null) {
+            instance = new Stock();
+        }
+        return instance;
+    }
     private int id;
     private List<StockItem> items;
 
