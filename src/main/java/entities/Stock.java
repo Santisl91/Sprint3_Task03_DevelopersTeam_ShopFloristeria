@@ -3,34 +3,38 @@ package entities;
 import java.util.ArrayList;
 
 public class Stock {
+    private static Stock instance;
     private ArrayList<StockItem> items;
 
-    private Stock() {
+   private Stock() {
         this.items = new ArrayList<StockItem>();
     }
+    public static Stock getInstance() {
+        if (instance == null) {
+            instance = new Stock();
+        }
+        return instance;
+    }
     public ArrayList<StockItem> getItems() {
-        return this.items;
+        return items;
     }
-    public void addStockItem(StockItem item) {
-        this.items.add(item);
-    }
+   /* public void addStockItem(StockItem item) {
+    }*/
     public void addQuantity(Product product, int quantity) {
-        for (StockItem item : this.items) {
-            if (item.getProduct().equals(product)) {
-                item.setQuantity(item.getQuantity() + quantity);
-                break;
-            }
+        StockItem item = findStockItem(product);
+        if (item != null) {
+            item.setQuantity(item.getQuantity() + quantity);
+        } else {
+            this.items.add(new StockItem(product, quantity));
         }
     }
     public void removeStockItem(StockItem item) {
         this.items.remove(item);
     }
     public void removeQuantity(Product product, int quantity) {
-        for (StockItem item : this.items) {
-            if (item.getProduct().equals(product)) {
-                item.setQuantity(item.getQuantity() - quantity);
-                break;
-            }
+        StockItem item = findStockItem(product);
+        if (item != null) {
+            item.setQuantity(item.getQuantity() - quantity);
         }
     }
     public StockItem findStockItem(Product product) {
@@ -41,16 +45,4 @@ public class Stock {
         }
         return null;
     }
- /*   public void saveToFile() {
-        // TODO
-    }
-    public void loadFromFile() {
-        // TODO
-    }
-    public void saveToDatabase() {
-        // TODO
-    }
-    public void loadFromDatabase() {
-        // TODO
-    }*/
 }
