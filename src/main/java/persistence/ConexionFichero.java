@@ -39,39 +39,22 @@ public class ConexionFichero implements IConexion {
 	public JsonNode leer() {
 		JsonNode jsonNode = null;
 		if (this.nombre != null) {
-			// Crear un objeto ObjectMapper (de Jackson)
 			ObjectMapper objectMapper = new ObjectMapper();
 
 			try {
-				// Leer el archivo JSON completo como un árbol de nodos JsonNode
 				jsonNode = objectMapper.readTree(new File(nombre));
 
-				// Ahora puedes trabajar con el árbol de nodos JsonNode
 				System.out.println("Contenido JSON completo:");
 				System.out.println(jsonNode.toPrettyString());
-				return jsonNode;
-				// También puedes convertir el JsonNode a un objeto Java si es necesario
-				// Por ejemplo, si el JSON es un objeto:
-				// MiObjeto miObjeto = objectMapper.treeToValue(jsonNode, MiObjeto.class);
-				// return null;
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				e.printStackTrace();
-			}
-			
-			// try (FileReader reader = new FileReader(this.nombre)) {
-			// Crear un objeto JSON desde el archivo
-			// JSONObject jsonObject = new JSONObject(new String(reader.));
 
-			// Acceder a los datos
-			// return jsonObject;
+				throw new RuntimeException("Error al leer el fichero ", e);
+			}
 		}
 		return jsonNode;
-
 	}
-
 	public void write(JSONObject jsonObj) {
-		// Escribir el objeto JSON en un archivo
 		try (FileWriter fileWriter = new FileWriter(this.nombre)) {
 			fileWriter.write(jsonObj.toString());
 		} catch (IOException e) {
@@ -79,7 +62,6 @@ public class ConexionFichero implements IConexion {
 		}
 
 	}
-
 	@Override
 	public void conectar() {
 		// TODO Auto-generated method stub

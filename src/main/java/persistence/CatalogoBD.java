@@ -43,14 +43,12 @@ public class CatalogoBD {
 
 			}
 		}
-		
-
 	}
 	public void guardarBd() {
 		ConexionFichero f = (ConexionFichero) FactoryBD.getConexionBD("TXT");
 		f.setNombre("Catalogo.txt");
 		JSONObject jsonCatalogo = new JSONObject();
-		jsonCatalogo.put(this.getClass().toString(), catalogo.getItems());
+		jsonCatalogo.put(catalogo.getClass().toString(), catalogo.getItems());
 		f.write(jsonCatalogo);
 
 	}

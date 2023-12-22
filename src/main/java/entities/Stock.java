@@ -12,7 +12,7 @@ public class Stock {
         return this.items;
     }
     public void addStockItem(StockItem item) {
-        this.items.add(item);
+        //buscar si existe el producto en el stock
     }
     public void addQuantity(Product product, int quantity) {
         for (StockItem item : this.items) {
@@ -41,16 +41,4 @@ public class Stock {
         }
         return null;
     }
- /*   public void saveToFile() {
-        // TODO
-    }
-    public void loadFromFile() {
-        // TODO
-    }
-    public void saveToDatabase() {
-        // TODO
-    }
-    public void loadFromDatabase() {
-        // TODO
-    }*/
 }

@@ -1,9 +1,12 @@
 package entities;
 
+import interfaces.Ipersistence;
+import persistence.TicketDB;
+
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Ticket {
+public class Ticket implements Ipersistence {
     private int id;
     private ArrayList<StockItem> venta;
     private Date date;
@@ -45,4 +48,25 @@ public class Ticket {
         this.totalPrice = totalPrice;
     }
 
+    @Override
+    public void leerBd() {
+        TicketDB ticket = new TicketDB();
+        ticket.leerBD();
+    }
+    @Override
+    public void guardarBd() {
+        TicketDB ticket = new TicketDB();
+        ticket.guardarBD();
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Ticket))
+            return false;
+        Ticket t = (Ticket) obj;
+        return this.id == t.id && this.totalPrice == t.totalPrice;
+    }
+    @Override
+    public int hashCode() {
+        return 31 * Integer.hashCode(this.id) * Double.hashCode(this.totalPrice);
+    }
 }
