@@ -11,9 +11,8 @@ public class Stock {
     public ArrayList<StockItem> getItems() {
         return this.items;
     }
-    public void addStockItem(StockItem item) {
-        //buscar si existe el producto en el stock
-    }
+   /* public void addStockItem(StockItem item) {
+    }*/
     public void addQuantity(Product product, int quantity) {
         for (StockItem item : this.items) {
             if (item.getProduct().equals(product)) {
