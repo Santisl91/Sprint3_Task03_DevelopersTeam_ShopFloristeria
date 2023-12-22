@@ -26,11 +26,12 @@ public class Product {
 		return id;
 	}
 
-	public Product(String name) {
+    public Product(String name, double price) {
         this.name = name;
+        this.price = price;
         this.id = contador++;
-        
     }
+
 
     public String getName() {
         return name;
