@@ -4,13 +4,13 @@ public class Decoration extends Product {
 
 	private String material;
 
-	public Decoration(String name, String material) {
-		super(name);
+	public Decoration(String name, String material, double price) {
+		super(name, price);
 		this.material = material;
 		this.setTipo(Decoration.class.toString());
 	}
-	public Decoration(int id, String name, String material) {
-		this(name, material);
+	public Decoration(int id, String name, String material, double price) {
+		this(name, material, price);
 		this.setId(id);
 	}
 
@@ -24,6 +24,6 @@ public class Decoration extends Product {
 
 	@Override
 	public String toString() {
-		return "[id:" + getId() + ", material:" + material + ", Name:" + getName() + "]";
+		return "[id:" + getId() + ", material:" + material + ", Name:" + getName() + ", price:" + getPrice() + "]";
 	}
 }

@@ -1,1 +1,3 @@
-{"class entities.Catalogue":[{"tipo":"class entities.Tree","price":0,"name":"pino","id":1,"height":"33"},{"tipo":"class entities.Flower","color":"blanco","price":0,"name":"flor","id":2},{"tipo":"class entities.Flower","color":"rojo","price":0,"name":"tulipan","id":3},{"tipo":"class entities.Decoration","material":"madera","price":0,"name":"deco1","id":4},{"tipo":"class entities.Tree","price":0,"name":"aveto","id":5,"height":"44"},{"tipo":"class entities.Decoration","material":"hierro","price":0,"name":"deco2","id":6},{"tipo":"class entities.Tree","price":0,"name":"aaaa","id":7,"height":"22"}]}
+
+{"class entities.Catalogue":[{"tipo":"class entities.Tree","price":100,"name":"pino","id":1,"height":"30"}]}
+

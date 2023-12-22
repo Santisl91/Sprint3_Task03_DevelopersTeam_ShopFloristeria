@@ -9,38 +9,54 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Catalogue catalogo = new Catalogue();
-        Ticket ticket = new Ticket(1, 0);
 
-        try {
-            Scanner scanner = new Scanner(System.in);
+        Shop shop = Shop.getInstance();
+        Scanner scanner = new Scanner(System.in);
+        crearFloristeria(shop);
+
+        if (shop.getName() != null) {
+            Catalogue catalogo = new Catalogue();
             catalogo.leerBd();
-            ticket.leerBd();
-
-            int eleccion;
             do {
-                System.out.println("Ingrese el tipo de artículo a agregar (1: Árbol, 2: Flor, 3: Decoración, 0: Salir):");
-                eleccion = scanner.nextInt();
+                mostrarMenu();
+                int eleccion = scanner.nextInt();
                 scanner.nextLine();
 
-                if (eleccion == 0) {
-                    System.out.println("Saliendo del programa");
+                Product nuevoItem = ProductItemFactory.createCatalogItem(eleccion, catalogo, shop);
+                if (nuevoItem != null) {
+                }
+                if (nuevoItem == null) {
+                    System.out.println("Programa cerrado.");
                     break;
                 }
 
-                Product nuevoItem = ProductItemFactory.createCatalogItem(eleccion, catalogo);
-                if (nuevoItem != null) {
-                    catalogo.addItem(nuevoItem);
-                    System.out.println("Se agregó el artículo al catálogo.");
-                } else {
-                    System.out.println("No se pudo agregar el artículo al catálogo.");
-                }
             } while (true);
-        } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-        } finally {
-            ticket.guardarBd();
             catalogo.guardarBd();
         }
     }
+
+    private static void mostrarMenu() {
+        System.out.println("\n--- Menú ---");
+        System.out.println("1. Agregar árbol");
+        System.out.println("2. Agregar flor");
+        System.out.println("3. Agregar decoración");
+        System.out.println("4. Retirar árbol");
+        System.out.println("5. Retirar flor");
+        System.out.println("6. Retirar decoración");
+        System.out.println("7. Ver todos los tickets");
+        System.out.println("8. Ver stock con cantidades de productos");
+        System.out.println("9. Salir");
+    }
+
+    private static void crearFloristeria(Shop shop) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Bienvenido a la aplicación de floristería.");
+
+        System.out.print("Ingrese el nombre de la floristería: ");
+        String flowerShopName = scanner.nextLine();
+
+        shop.setName(flowerShopName); // Configurar el nombre de la floristería en la tienda
+        System.out.println("Floristería creada: " + shop.getName());
+    }
 }
+

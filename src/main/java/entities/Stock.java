@@ -1,44 +1,56 @@
 package entities;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Stock {
-    private static Stock instance;
-    private ArrayList<StockItem> items;
 
-   private Stock() {
-        this.items = new ArrayList<StockItem>();
+    private static Stock instance;
+
+    private Stock() {
+        // Constructor privado
     }
+
     public static Stock getInstance() {
         if (instance == null) {
             instance = new Stock();
         }
         return instance;
     }
-    public ArrayList<StockItem> getItems() {
+    private int id;
+    private List<StockItem> items;
+
+    public Stock(int id) {
+        this.id = id;
+        this.items = new ArrayList<>();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public List<StockItem> getItems() {
         return items;
     }
-   /* public void addStockItem(StockItem item) {
-    }*/
-    public void addQuantity(Product product, int quantity) {
-        StockItem item = findStockItem(product);
-        if (item != null) {
-            item.setQuantity(item.getQuantity() + quantity);
+
+    public void addStockItem(Product product, int quantity) {
+        StockItem existingItem = findStockItem(product);
+
+        if (existingItem != null) {
+            existingItem.setQuantity(existingItem.getQuantity() + quantity);
         } else {
-            this.items.add(new StockItem(product, quantity));
+            // Si no existe, creemos un nuevo StockItem y agréguelo al stock
+            StockItem newItem = new StockItem(product, quantity);
+            items.add(newItem);
         }
     }
+
     public void removeStockItem(StockItem item) {
-        this.items.remove(item);
+        items.remove(item);
     }
-    public void removeQuantity(Product product, int quantity) {
-        StockItem item = findStockItem(product);
-        if (item != null) {
-            item.setQuantity(item.getQuantity() - quantity);
-        }
-    }
+
     public StockItem findStockItem(Product product) {
-        for (StockItem item : this.items) {
+        for (StockItem item : items) {
             if (item.getProduct().equals(product)) {
                 return item;
             }
