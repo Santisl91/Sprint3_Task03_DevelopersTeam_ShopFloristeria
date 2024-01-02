@@ -73,6 +73,13 @@ public class Shop {
         }
         return null;
     }
+    public void displayAllStock() {
+        System.out.println("Contenido completo del stock:");
+
+        for (Stock stock : stockProducts) {
+            stock.displayAllStock();
+        }
+    }
 
     public List<Stock> getStockProducts() {
         return stockProducts;

@@ -6,8 +6,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Stock implements Ipersistence {
+
+    private static Stock instance;
+
+    private Stock() {
+        // Constructor privado
+    }
+
+    public static Stock getInstance() {
+        if (instance == null) {
+            instance = new Stock();
+        }
+        return instance;
+    }
+
     private int id;
-    private List<StockItem> items;
+    private List<StockItem> items = new ArrayList<>();
 
     public Stock(int id) {
         this.id = id;
@@ -20,6 +34,10 @@ public class Stock implements Ipersistence {
         return items;
     }
     public void addStockItem(Product product, int quantity) {
+        if (product == null || quantity <= 0) {
+            return;
+        }
+
         StockItem existingItem = findStockItem(product);
 
         if (existingItem != null) {
@@ -30,11 +48,24 @@ public class Stock implements Ipersistence {
             items.add(newItem);
         }
     }
+
+    public void displayAllStock() {
+        System.out.println("Contenido del stock:");
+
+        for (StockItem item : items) {
+            System.out.println("Producto: " + item.getProduct().getName() +
+                    ", Cantidad: " + item.getQuantity());
+        }
+    }
+
     public void removeStockItem(StockItem item) {
         items.remove(item);
     }
 
     public StockItem findStockItem(Product product) {
+        if (product == null) {
+            return null;
+        }
         for (StockItem item : items) {
             if (item.getProduct().equals(product)) {
                 return item;
@@ -42,6 +73,7 @@ public class Stock implements Ipersistence {
         }
         return null;
     }
+
     @Override
     public void leerBd() {
         StockDB stock = new StockDB(this);
