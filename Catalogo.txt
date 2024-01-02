@@ -1,3 +1,1 @@
-
-{"class entities.Catalogue":[{"tipo":"class entities.Tree","price":100,"name":"pino","id":1,"height":"30"}]}
-
+{"class entities.Catalogue":[{"tipo":"class entities.Tree","price":100,"name":"pino","id":1,"height":"30"},{"tipo":"class entities.Tree","price":10,"name":"pino","id":2,"height":"10"},{"tipo":"class entities.Tree","price":200,"name":"arbol","id":3,"height":"20"},{"tipo":"class entities.Tree","price":100,"name":"pino","id":4,"height":"20"}]}

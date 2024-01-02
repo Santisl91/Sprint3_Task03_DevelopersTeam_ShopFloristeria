@@ -17,8 +17,9 @@ public class Stock {
         }
         return instance;
     }
+
     private int id;
-    private List<StockItem> items;
+    private List<StockItem> items = new ArrayList<>();
 
     public Stock(int id) {
         this.id = id;
@@ -34,6 +35,10 @@ public class Stock {
     }
 
     public void addStockItem(Product product, int quantity) {
+        if (product == null || quantity <= 0) {
+            return;
+        }
+
         StockItem existingItem = findStockItem(product);
 
         if (existingItem != null) {
@@ -45,11 +50,23 @@ public class Stock {
         }
     }
 
+    public void displayAllStock() {
+        System.out.println("Contenido del stock:");
+
+        for (StockItem item : items) {
+            System.out.println("Producto: " + item.getProduct().getName() +
+                    ", Cantidad: " + item.getQuantity());
+        }
+    }
+
     public void removeStockItem(StockItem item) {
         items.remove(item);
     }
 
     public StockItem findStockItem(Product product) {
+        if (product == null) {
+            return null;
+        }
         for (StockItem item : items) {
             if (item.getProduct().equals(product)) {
                 return item;
@@ -57,4 +74,5 @@ public class Stock {
         }
         return null;
     }
+
 }

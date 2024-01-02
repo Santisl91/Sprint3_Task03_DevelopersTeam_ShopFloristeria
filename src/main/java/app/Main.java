@@ -3,7 +3,6 @@ package app;
 import entities.Catalogue;
 import entities.Product;
 import entities.ProductItemFactory;
-import entities.Ticket;
 
 import java.util.Scanner;
 
@@ -17,20 +16,23 @@ public class Main {
         if (shop.getName() != null) {
             Catalogue catalogo = new Catalogue();
             catalogo.leerBd();
+
+            int eleccion;
+
             do {
                 mostrarMenu();
-                int eleccion = scanner.nextInt();
+                eleccion = scanner.nextInt();
                 scanner.nextLine();
 
-                Product nuevoItem = ProductItemFactory.createCatalogItem(eleccion, catalogo, shop);
-                if (nuevoItem != null) {
-                }
-                if (nuevoItem == null) {
+                if (eleccion != 0) {
+                    Product nuevoItem = ProductItemFactory.createCatalogItem(eleccion, catalogo, shop);
+                    // Puedes realizar otras operaciones si es necesario
+                } else {
                     System.out.println("Programa cerrado.");
-                    break;
                 }
 
-            } while (true);
+            } while (eleccion != 0);
+
             catalogo.guardarBd();
         }
     }
