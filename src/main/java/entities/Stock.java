@@ -1,22 +1,11 @@
 package entities;
 
+import interfaces.Ipersistence;
+import persistence.StockDB;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Stock {
-
-    private static Stock instance;
-
-    private Stock() {
-        // Constructor privado
-    }
-
-    public static Stock getInstance() {
-        if (instance == null) {
-            instance = new Stock();
-        }
-        return instance;
-    }
+public class Stock implements Ipersistence {
     private int id;
     private List<StockItem> items;
 
@@ -24,15 +13,12 @@ public class Stock {
         this.id = id;
         this.items = new ArrayList<>();
     }
-
     public int getId() {
         return id;
     }
-
     public List<StockItem> getItems() {
         return items;
     }
-
     public void addStockItem(Product product, int quantity) {
         StockItem existingItem = findStockItem(product);
 
@@ -44,7 +30,6 @@ public class Stock {
             items.add(newItem);
         }
     }
-
     public void removeStockItem(StockItem item) {
         items.remove(item);
     }
@@ -56,5 +41,15 @@ public class Stock {
             }
         }
         return null;
+    }
+    @Override
+    public void leerBd() {
+        StockDB stock = new StockDB(this);
+        stock.leerBd();
+    }
+    @Override
+    public void guardarBd() {
+        StockDB stock = new StockDB(this);
+        stock.guardarBd();
     }
 }

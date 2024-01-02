@@ -7,13 +7,16 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
 public class ConexionFichero implements IConexion {
+
 	private String camino;
 	private String nombre;
+
+	public ConexionFichero() {
+	}
 
 	public String getCamino() {
 		return camino;
@@ -29,11 +32,6 @@ public class ConexionFichero implements IConexion {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	public ConexionFichero() {
-		// TODO Auto-generated constructor stub
-
 	}
 
 	public JsonNode leer() {
@@ -64,14 +62,12 @@ public class ConexionFichero implements IConexion {
 	}
 	@Override
 	public void conectar() {
-		// TODO Auto-generated method stub
-
+		System.out.println("Conectando a fichero " + this.nombre);
 	}
 
 	@Override
 	public void desconectar() {
-		// TODO Auto-generated method stub
-
+		System.out.println("Desconectando de fichero " + this.nombre);
 	}
 
 }

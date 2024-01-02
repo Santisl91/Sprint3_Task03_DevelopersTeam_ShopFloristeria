@@ -9,6 +9,9 @@ import entities.Decoration;
 import entities.Flower;
 import entities.Tree;
 
+import java.io.File;
+import java.io.IOException;
+
 public class CatalogoBD {
 	private Catalogue catalogo;
 	
@@ -16,11 +19,20 @@ public class CatalogoBD {
 		catalogo = cat;
 	}
 
-	public void leerBd()
-	{
+	public void leerBd() {
 		JsonNode jsonNode;
 		ConexionFichero f = (ConexionFichero) FactoryBD.getConexionBD("TXT");
 		f.setNombre("Catalogo.txt");
+
+		File file = new File(f.getNombre());
+		if (!file.exists()) {
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
 		jsonNode = (JsonNode) f.leer();
 
 		JsonNode cat = jsonNode.get(Catalogue.class.toString());
