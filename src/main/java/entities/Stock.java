@@ -1,9 +1,11 @@
 package entities;
 
+import interfaces.Ipersistence;
+import persistence.StockDB;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Stock {
+public class Stock implements Ipersistence {
 
     private static Stock instance;
 
@@ -25,15 +27,12 @@ public class Stock {
         this.id = id;
         this.items = new ArrayList<>();
     }
-
     public int getId() {
         return id;
     }
-
     public List<StockItem> getItems() {
         return items;
     }
-
     public void addStockItem(Product product, int quantity) {
         if (product == null || quantity <= 0) {
             return;
@@ -75,4 +74,14 @@ public class Stock {
         return null;
     }
 
+    @Override
+    public void leerBd() {
+        StockDB stock = new StockDB(this);
+        stock.leerBd();
+    }
+    @Override
+    public void guardarBd() {
+        StockDB stock = new StockDB(this);
+        stock.guardarBd();
+    }
 }

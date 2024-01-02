@@ -32,7 +32,6 @@ public class Product {
         this.id = contador++;
     }
 
-
     public String getName() {
         return name;
     }

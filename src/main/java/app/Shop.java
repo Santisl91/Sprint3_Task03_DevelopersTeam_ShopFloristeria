@@ -3,6 +3,8 @@ package app;
 import entities.Product;
 import entities.Stock;
 import entities.Ticket;
+import interfaces.Ipersistence;
+//import persistence.ShopDB;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,5 +84,15 @@ public class Shop {
     public List<Stock> getStockProducts() {
         return stockProducts;
     }
+ /*   @Override
+    public void leerBd() {
+        ShopDB shop = new ShopDB(this);
+        shop.leerBd();
+    }
+    @Override
+    public void guardarBd() {
+        ShopDB shop = new ShopDB(this);
+        shop.guardarBd();
+    }*/
 }
 
