@@ -3,14 +3,28 @@ package app;
 import entities.Catalogue;
 import entities.Product;
 import entities.ProductItemFactory;
+import entities.Stock;
 import entities.Ticket;
+//import persistence.ShopDB;
+import persistence.StockDB;
+import persistence.TicketDB;
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
 
+        Stock stock = new Stock(1);
+        StockDB stockDB = new StockDB(stock);
+        stockDB.leerBd();
+
+        Ticket ticket = new Ticket(1, 0);
+        TicketDB ticketDB = new TicketDB();
+        ticketDB.leerBd();
+
         Shop shop = Shop.getInstance();
+        /*ShopDB shopDB = new ShopDB(shop);
+        shopDB.leerBd();*/
         Scanner scanner = new Scanner(System.in);
         crearFloristeria(shop);
 

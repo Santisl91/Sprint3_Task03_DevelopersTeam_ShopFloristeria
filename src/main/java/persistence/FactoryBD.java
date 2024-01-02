@@ -6,14 +6,14 @@ public class FactoryBD {
 
 	public static IConexion getConexionBD(String tipo) {
 		switch (tipo) {
-		case "TXT": {
-			return new ConexionFichero();
-		}
+			case "TXT": {
+				return new ConexionFichero();
+			}
 
-		default: {
-			throw new IllegalArgumentException("Unexpected value: " + tipo);
-		}
+			default: {
+				throw new IllegalArgumentException("Unexpected value: " + tipo);
+			}
+
 		}
 	}
-
 }

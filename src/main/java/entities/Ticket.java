@@ -51,12 +51,12 @@ public class Ticket implements Ipersistence {
     @Override
     public void leerBd() {
         TicketDB ticket = new TicketDB();
-        ticket.leerBD();
+        ticket.leerBd();
     }
     @Override
     public void guardarBd() {
         TicketDB ticket = new TicketDB();
-        ticket.guardarBD();
+        ticket.guardarBd();
     }
     @Override
     public boolean equals(Object obj) {
