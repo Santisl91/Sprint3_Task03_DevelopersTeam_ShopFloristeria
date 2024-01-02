@@ -3,7 +3,6 @@ package persistence;
 import com.fasterxml.jackson.databind.JsonNode;
 import entities.Ticket;
 import org.json.JSONObject;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

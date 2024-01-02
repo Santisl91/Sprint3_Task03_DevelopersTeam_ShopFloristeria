@@ -8,7 +8,6 @@ import entities.Ticket;
 //import persistence.ShopDB;
 import persistence.StockDB;
 import persistence.TicketDB;
-
 import java.util.Scanner;
 
 public class Main {

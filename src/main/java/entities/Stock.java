@@ -2,12 +2,10 @@ package entities;
 
 import interfaces.Ipersistence;
 import persistence.StockDB;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Stock implements Ipersistence {
-
     private int id;
     private List<StockItem> items;
 

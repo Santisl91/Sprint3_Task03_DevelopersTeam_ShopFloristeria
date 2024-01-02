@@ -2,12 +2,9 @@ package persistence;
 
 import entities.Product;
 import org.json.JSONObject;
-
 import com.fasterxml.jackson.databind.JsonNode;
-
 import entities.Stock;
 import entities.StockItem;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -54,7 +51,5 @@ public class StockDB {
         JSONObject jsonStock = new JSONObject();
         jsonStock.put(stockDb.getClass().toString(), stockDb.getItems());
         f.write(jsonStock);
-
     }
-
 }

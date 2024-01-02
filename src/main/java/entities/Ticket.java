@@ -2,7 +2,6 @@ package entities;
 
 import interfaces.Ipersistence;
 import persistence.TicketDB;
-
 import java.util.ArrayList;
 import java.util.Date;
 
