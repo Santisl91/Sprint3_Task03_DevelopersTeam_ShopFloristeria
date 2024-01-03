@@ -2,9 +2,7 @@ package entities;
 
 import app.Shop;
 import entities.Stock;
-
 import java.io.IOException;
-import java.util.List;
 import java.util.Scanner;
 
 
@@ -51,9 +49,19 @@ public class ProductItemFactory {
                     double flowerPrice = scanner.nextDouble();
                     Flower flower = new Flower(flowerName, flowerColor, flowerPrice);
                     catalog.addItem(flower);
+                    catalog.guardarBd();
                     Stock stockFlower = shop.encontrarStock(flower);
-                    if (stockFlower != null) {
-                        stockFlower.addStockItem(flower, 0); // 0 es la cantidad inicial
+                    if (stockFlower == null) {
+                        stockFlower = Stock.getInstance();
+                        System.out.println("Stock creado para la flor. ¿Desea agregar cantidad? (S/N)");
+                        char choice = scanner.next().charAt(0);
+                        if (choice == 'S' || choice == 's') {
+                            System.out.println("Ingrese la cantidad:");
+                            int quantity = scanner.nextInt();
+                            stockFlower.addStockItem(flower, quantity);
+                            stockFlower.guardarBd();
+                            System.out.println("Stock creado.");
+                        }
                     } else {
                         System.out.println("Error: Stock no encontrado para el árbol.");
                     }
@@ -69,9 +77,19 @@ public class ProductItemFactory {
                     double decoPrice = scanner.nextDouble();
                     Decoration decoration = new Decoration(decorationName, decorationMaterial, decoPrice);
                     catalog.addItem(decoration);
+                    catalog.guardarBd();
                     Stock stockDeco = shop.encontrarStock(decoration);
-                    if (stockDeco != null) {
-                        stockDeco.addStockItem(decoration, 0); // 0 es la cantidad inicial
+                    if (stockDeco == null) {
+                        stockDeco = Stock.getInstance();
+                        System.out.println("Stock creado para la decoración. ¿Desea agregar cantidad? (S/N)");
+                        char choice = scanner.next().charAt(0);
+                        if (choice == 'S' || choice == 's') {
+                            System.out.println("Ingrese la cantidad:");
+                            int quantity = scanner.nextInt();
+                            stockDeco.addStockItem(decoration, quantity);
+                            stockDeco.guardarBd();
+                            System.out.println("Stock creado.");
+                        }
                     } else {
                         System.out.println("Error: Stock no encontrado para el árbol.");
                     }
@@ -103,9 +121,7 @@ public class ProductItemFactory {
                     }
                     return null;
 
-                case 8:
-                   shop.getStockProducts();
-                    break;
+                case 8://TODO: Ver stock con cantidades de productos de clase Shop
 
                 case 9:
                     // Crear floristería

@@ -64,7 +64,7 @@ public class Main {
         System.out.println("5. Retirar flor");
         System.out.println("6. Retirar decoración");
         System.out.println("7. Ver todos los tickets");
-        System.out.println("8. Ver stock con cantidades de productos");
+        System.out.println("8. Ver stock con cantidades de productos");//TODO: Ver stock con cantidades de productos
         System.out.println("9. Salir");
     }
 

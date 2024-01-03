@@ -4,7 +4,7 @@ import entities.Product;
 import entities.Stock;
 import entities.Ticket;
 import interfaces.Ipersistence;
-//import persistence.ShopDB;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,17 +73,12 @@ public class Shop {
         }
         return null;
     }
-    public void displayAllStock() {
-        System.out.println("Contenido completo del stock:");
-
-        for (Stock stock : stockProducts) {
-            stock.displayAllStock();
-        }
-    }
 
     public List<Stock> getStockProducts() {
         return stockProducts;
     }
+
+    //TODO: listar los productos con sus cantidades en stock en base al id del producto
 
 }
 

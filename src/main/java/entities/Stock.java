@@ -53,15 +53,6 @@ public class Stock implements Ipersistence {
         }
     }
 
-    public void displayAllStock() {
-        System.out.println("Contenido del stock:");
-
-        for (StockItem item : items) {
-            System.out.println("Producto: " + item.getProduct().getName() +
-                    ", Cantidad: " + item.getQuantity());
-        }
-    }
-
     public void removeStockItem(StockItem item) {
         items.remove(item);
     }
