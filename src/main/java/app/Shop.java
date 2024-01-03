@@ -84,15 +84,6 @@ public class Shop {
     public List<Stock> getStockProducts() {
         return stockProducts;
     }
- /*   @Override
-    public void leerBd() {
-        ShopDB shop = new ShopDB(this);
-        shop.leerBd();
-    }
-    @Override
-    public void guardarBd() {
-        ShopDB shop = new ShopDB(this);
-        shop.guardarBd();
-    }*/
+
 }
 

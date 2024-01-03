@@ -2,15 +2,19 @@ package entities;
 
 import interfaces.Ipersistence;
 import persistence.StockDB;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Stock implements Ipersistence {
 
     private static Stock instance;
+    private StockDB stockDB;
 
     private Stock() {
         // Constructor privado
+        stockDB = new StockDB(this);
     }
 
     public static Stock getInstance() {
@@ -75,12 +79,12 @@ public class Stock implements Ipersistence {
     }
 
     @Override
-    public void leerBd() {
+    public void leerBd() throws IOException {
         StockDB stock = new StockDB(this);
         stock.leerBd();
     }
     @Override
-    public void guardarBd() {
+    public void guardarBd() throws IOException {
         StockDB stock = new StockDB(this);
         stock.guardarBd();
     }

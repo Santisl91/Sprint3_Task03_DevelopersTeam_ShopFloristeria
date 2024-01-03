@@ -3,11 +3,13 @@ package entities;
 import app.Shop;
 import entities.Stock;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
+
 public class ProductItemFactory {
-    public static Product createCatalogItem(int itemType, Catalogue catalog, Shop shop) {
+    public static Product createCatalogItem(int itemType, Catalogue catalog, Shop shop) throws IOException {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -21,6 +23,7 @@ public class ProductItemFactory {
                     double treePrice = scanner.nextDouble();
                     Tree tree = new Tree(treeName, treeHeight, treePrice);
                     catalog.addItem(tree);
+                    catalog.guardarBd();
                     Stock stockTree = shop.encontrarStock(tree);
                     if (stockTree == null) {
                         stockTree = Stock.getInstance();
@@ -30,6 +33,8 @@ public class ProductItemFactory {
                             System.out.println("Ingrese la cantidad:");
                             int quantity = scanner.nextInt();
                             stockTree.addStockItem(tree, quantity);
+                            stockTree.guardarBd();
+                            System.out.println("Stock creado.");
                         }
                     } else {
                         System.out.println("Stock creado.");
@@ -99,10 +104,7 @@ public class ProductItemFactory {
                     return null;
 
                 case 8:
-                    System.out.println("Contenido completo del stock:");
-                    for (Stock stock : shop.getStockProducts()) {
-                        stock.displayAllStock();
-                    }
+                   shop.getStockProducts();
                     break;
 
                 case 9:
