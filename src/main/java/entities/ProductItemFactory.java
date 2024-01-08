@@ -1,15 +1,13 @@
 package entities;
 
 import app.Shop;
-import entities.Stock;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Scanner;
 
 
 public class ProductItemFactory {
-    public static Product createCatalogItem(int itemType, Catalogue catalog, Shop shop) throws IOException {
+    public static Object createCatalogItem(int itemType, Catalogue catalog, Shop shop) throws IOException {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -79,21 +77,24 @@ public class ProductItemFactory {
                     return decoration;
 
                 case 4:
-                    System.out.println("Ingrese el nombre del árbol a retirar:");
-                    String treeToRemove = scanner.nextLine();
-                    catalog.removeProductByName(treeToRemove);
+                    catalog.displayCatalog();
+                    System.out.println("Ingrese el ID del árbol a retirar:");
+                    int treeToRemove = scanner.nextInt();
+                    catalog.removeProductById(treeToRemove);
                     return null;
 
                 case 5:
-                    System.out.println("Ingrese el nombre de la flor a retirar:");
-                    String flowerToRemove = scanner.nextLine();
-                    catalog.removeProductByName(flowerToRemove);
+                    catalog.displayCatalog();
+                    System.out.println("Ingrese el ID de la flor a retirar:");
+                    int flowerToRemove = scanner.nextInt();
+                    catalog.removeProductById(flowerToRemove);
                     return null;
 
                 case 6:
-                    System.out.println("Ingrese el nombre de la decoración a retirar:");
-                    String decorationToRemove = scanner.nextLine();
-                    catalog.removeProductByName(decorationToRemove);
+                    catalog.displayCatalog();
+                    System.out.println("Ingrese el ID de la decoración a retirar:");
+                    int decorationToRemove = scanner.nextInt();
+                    catalog.removeProductById(decorationToRemove);
                     return null;
 
                 case 7:
@@ -111,6 +112,39 @@ public class ProductItemFactory {
                     // Crear floristería
                     System.out.println("Ya se creó la floristería.");
                     return null;
+
+                case 10:
+                    int newTicketId = shop.getNextTicketId();
+                    Ticket newTicket = new Ticket(newTicketId, 0, 0.0);
+                    shop.addTicket(newTicket);
+
+                    System.out.println("Ingrese el ID del producto a agregar al ticket:");
+                    catalog.displayCatalog();
+                    int productIdToAdd = scanner.nextInt();
+
+                    Product productToAdd = shop.getProductById(productIdToAdd);
+                    Stock stock = shop.encontrarStock(productToAdd);
+
+                    if (productToAdd != null && stock != null) {
+                        newTicket.addProductById(productIdToAdd, 0, shop);
+
+                        System.out.println("Ingrese la cantidad del producto:");
+                        int quantityToAdd = scanner.nextInt();
+
+                        stock.reduceStock(productToAdd, quantityToAdd);
+
+                        newTicket.updateTotalPrice();
+
+                        newTicket.guardarBd();
+
+                        System.out.println("Producto agregado al ticket y stock actualizado.");
+                    } else {
+                        System.out.println("Error: Producto no encontrado en el stock.");
+                    }
+
+                    return newTicket;
+
+
 
                 case 0:
                     System.out.println("Saliendo del programa.");

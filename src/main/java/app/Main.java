@@ -5,7 +5,7 @@ import entities.Product;
 import entities.ProductItemFactory;
 import entities.Stock;
 import entities.Ticket;
-//import persistence.ShopDB;
+import persistence.ShopDB;
 import persistence.StockDB;
 import persistence.TicketDB;
 
@@ -15,11 +15,11 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
-        Stock stock = new Stock(1);
+        Stock stock = Stock.getInstance();
         StockDB stockDB = new StockDB(stock);
         stockDB.leerBd();
 
-        Ticket ticket = new Ticket(1, 0);
+        Ticket ticket = new Ticket(0,0, 0);
         TicketDB ticketDB = new TicketDB();
         ticketDB.leerBd();
 
@@ -43,7 +43,7 @@ public class Main {
                 scanner.nextLine();
 
                 if (eleccion != 0) {
-                    Product nuevoItem = ProductItemFactory.createCatalogItem(eleccion, catalogo, shop);
+                    Object nuevoItem = ProductItemFactory.createCatalogItem(eleccion, catalogo, shop);
                 } else {
                     System.out.println("Programa cerrado.");
                 }
@@ -52,6 +52,7 @@ public class Main {
 
             catalogo.guardarBd();
             stock.guardarBd();
+
         }
     }
 
@@ -65,7 +66,9 @@ public class Main {
         System.out.println("6. Retirar decoración");
         System.out.println("7. Ver todos los tickets");
         System.out.println("8. Ver stock con cantidades de productos");
-        System.out.println("9. Salir");
+        System.out.println("9. Crear Floristeria.");
+        System.out.println("10. Crear Ticket.");
+        System.out.println("0. Salir");
     }
 
     private static void crearFloristeria(Shop shop) {

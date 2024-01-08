@@ -1,5 +1,5 @@
 package persistence;
-/*
+
 import entities.Product;
 import entities.Stock;
 import org.json.JSONObject;
@@ -58,4 +58,4 @@ public class ShopDB {
         jsonShop.put(shop.getClass().toString(), shop.getStockProducts());
         f.write(jsonShop);
     }
-}*/
+}

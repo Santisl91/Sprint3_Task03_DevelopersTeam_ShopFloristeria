@@ -34,7 +34,7 @@ public class TicketDB {
                 for (JsonNode prod : ticketsNode) {
                     String tipo = prod.get("tipo").asText();
                     if (tipo.equals(Ticket.class.toString())) {
-                        Ticket tk = new Ticket(prod.get("id").asInt(), prod.get("totalPrice").asDouble());
+                        Ticket tk = new Ticket(prod.get("id").asInt(),prod.get("quantity").asInt(), prod.get("totalPrice").asDouble());
                         if (!ticketList.contains(tk))
                             ticketList.add(tk);
                     }

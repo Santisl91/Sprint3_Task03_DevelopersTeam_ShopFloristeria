@@ -1,5 +1,6 @@
 package entities;
 
+import app.Shop;
 import interfaces.Ipersistence;
 import persistence.StockDB;
 
@@ -41,7 +42,6 @@ public class Stock implements Ipersistence {
         if (product == null || quantity <= 0) {
             return;
         }
-
         StockItem existingItem = findStockItem(product);
 
         if (existingItem != null) {
@@ -62,10 +62,6 @@ public class Stock implements Ipersistence {
         }
     }
 
-    public void removeStockItem(StockItem item) {
-        items.remove(item);
-    }
-
     public StockItem findStockItem(Product product) {
         if (product == null) {
             return null;
@@ -77,6 +73,32 @@ public class Stock implements Ipersistence {
         }
         return null;
     }
+    public StockItem findStockItemById(int productId) {
+        for (StockItem item : items) {
+            if (item.getProduct().getId() == productId) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    public void reduceStock(Product product, int quantity) {
+        StockItem stockItem = findStockItem(product);
+
+        if (stockItem != null) {
+            int currentQuantity = stockItem.getQuantity();
+
+            if (currentQuantity >= quantity) {
+                // Reducir la cantidad en el stock
+                stockItem.setQuantity(currentQuantity - quantity);
+            } else {
+                System.out.println("Error: No hay suficiente stock disponible para el producto: " + product.getName());
+            }
+        } else {
+            System.out.println("Error: Producto no encontrado en el stock.");
+        }
+    }
+
 
     @Override
     public void leerBd() throws IOException {

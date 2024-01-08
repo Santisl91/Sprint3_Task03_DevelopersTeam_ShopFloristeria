@@ -35,19 +35,19 @@ public class Catalogue implements Ipersistence {
         }
     }
 
-    public void removeProductByName(String productName) {
+    public void removeProductById(int productId) {
         Iterator<Product> iterator = items.iterator();
 
         while (iterator.hasNext()) {
             Product product = iterator.next();
-            if (product.getName().equalsIgnoreCase(productName)) {
+            if (product.getId() == productId) {
                 iterator.remove();
-                System.out.println("Producto '" + productName + "' eliminado del catálogo.");
+                System.out.println("Producto con ID '" + productId + "' eliminado del catálogo.");
                 return; // Terminamos la iteración al encontrar y eliminar el producto
             }
         }
 
-        System.out.println("No se encontró el producto '" + productName + "' en el catálogo.");
+        System.out.println("No se encontró el producto con ID '" + productId + "' en el catálogo.");
     }
 
     @Override

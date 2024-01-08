@@ -2,6 +2,7 @@ package app;
 
 import entities.Product;
 import entities.Stock;
+import entities.StockItem;
 import entities.Ticket;
 import interfaces.Ipersistence;
 //import persistence.ShopDB;
@@ -16,7 +17,7 @@ public class Shop {
     private List<Stock> stockProducts = new ArrayList<>();
     private List<Ticket> tickets = new ArrayList<>();
     private int id = 0;
-    private static int nextId = 1;
+    private int nextTicketId = 1;
 
     private Shop() {
 
@@ -27,6 +28,11 @@ public class Shop {
             instance = new Shop();
         }
         return instance;
+    }
+    public int getNextTicketId() {
+        int currentId = nextTicketId;
+        nextTicketId++;
+        return currentId;
     }
 
     public String getName() {
@@ -67,8 +73,18 @@ public class Shop {
 
     public Stock encontrarStock(Product product) {
         for (Stock stock : stockProducts) {
-            if (stock.findStockItem(product) != null) {
+            if (stock.findStockItemById(product.getId()) != null) {
                 return stock;
+            }
+        }
+        return null;
+    }
+
+    public Product getProductById(int productId) {
+        for (Stock stock : stockProducts) {
+            StockItem stockItem = stock.findStockItemById(productId);
+            if (stockItem != null) {
+                return stockItem.getProduct();
             }
         }
         return null;

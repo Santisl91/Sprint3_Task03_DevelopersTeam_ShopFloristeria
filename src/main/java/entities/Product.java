@@ -8,23 +8,24 @@ public class Product {
     private double price;
 
     public String getTipo() {
-		return tipo;
-	}
+        return tipo;
+    }
 
-  public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 
-	public void setId(int _id) {
-		id = _id;
-		if (contador < _id) {
-			contador = _id;
-		}
-		
-	}
-	public int getId() {
-		return id;
-	}
+    public void setId(int id) {
+        id = id;
+        if (contador < id) {
+            contador = id;
+        }
+
+    }
+
+    public int getId() {
+        return id;
+    }
 
     public Product(String name, double price) {
         this.name = name;
