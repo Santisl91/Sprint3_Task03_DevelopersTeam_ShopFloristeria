@@ -1,38 +1,23 @@
 package app;
 
-import entities.Product;
-import entities.Stock;
-import entities.StockItem;
-import entities.Ticket;
-import interfaces.Ipersistence;
-//import persistence.ShopDB;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class Shop {
-
-    private static Shop instance;
     private String name;
-    private List<Stock> stockProducts = new ArrayList<>();
-    private List<Ticket> tickets = new ArrayList<>();
-    private int id = 0;
-    private int nextTicketId = 1;
+    private String catalogueDbName;
+    private String stockDbName;
+    private String ticketDbName;
 
-    private Shop() {
-
+    public Shop(String name) {
+        this.name = name;
+        this.catalogueDbName = name + "_Catalogue.txt";
+        this.stockDbName = name + "_Stock.txt";
+        this.ticketDbName = name + "_Ticket.txt";
     }
 
-    public static Shop getInstance() {
-        if (instance == null) {
-            instance = new Shop();
-        }
-        return instance;
-    }
-    public int getNextTicketId() {
-        int currentId = nextTicketId;
-        nextTicketId++;
-        return currentId;
+    public Shop(String name, String catalogueDbName, String stockDbName, String ticketDbName) {
+        this.name = name;
+        this.catalogueDbName = catalogueDbName;
+        this.stockDbName = stockDbName;
+        this.ticketDbName = ticketDbName;
     }
 
     public String getName() {
@@ -43,63 +28,27 @@ public class Shop {
         this.name = name;
     }
 
-    public void addTicket(Ticket ticket) {
-        this.tickets.add(ticket);
+    public String getCatalogueDbName() {
+        return catalogueDbName;
     }
 
-    public List<Ticket> getTickets() {
-        return tickets;
+    public void setCatalogueDbName(String catalogueDbName) {
+        this.catalogueDbName = catalogueDbName;
     }
 
-    public double getTotalStockPrice() {
-        double total = 0;
-        for (Ticket ticket : this.tickets) {
-            total += ticket.getTotalPrice();
-        }
-        return total;
+    public String getStockDbName() {
+        return stockDbName;
     }
 
-    public double getTotalVentas() {
-        double total = 0;
-        for (Ticket ticket : this.tickets) {
-            total += ticket.getTotalPrice();
-        }
-        return total;
+    public void setStockDbName(String stockDbName) {
+        this.stockDbName = stockDbName;
     }
 
-    public int getId() {
-        return id;
+    public String getTicketDbName() {
+        return ticketDbName;
     }
 
-    public Stock encontrarStock(Product product) {
-        for (Stock stock : stockProducts) {
-            if (stock.findStockItemById(product.getId()) != null) {
-                return stock;
-            }
-        }
-        return null;
+    public void setTicketDbName(String ticketDbName) {
+        this.ticketDbName = ticketDbName;
     }
-
-    public Product getProductById(int productId) {
-        for (Stock stock : stockProducts) {
-            StockItem stockItem = stock.findStockItemById(productId);
-            if (stockItem != null) {
-                return stockItem.getProduct();
-            }
-        }
-        return null;
-    }
-    public void displayAllStock() {
-        System.out.println("Contenido completo del stock:");
-
-        for (Stock stock : stockProducts) {
-            stock.displayAllStock();
-        }
-    }
-
-    public List<Stock> getStockProducts() {
-        return stockProducts;
-    }
-
 }
-

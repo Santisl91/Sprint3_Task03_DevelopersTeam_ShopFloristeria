@@ -1,116 +1,69 @@
 package entities;
-
-import app.Shop;
-import interfaces.Ipersistence;
-import persistence.TicketDB;
-
-import java.util.ArrayList;
 import java.util.Date;
 
-public class Ticket implements Ipersistence {
-    private int id;
-    private static int contador = 0;
+public class Ticket {
+    private static int lastTicketId = 0;
 
-    private ArrayList<StockItem> venta;
-    private Date date;
+    private int ticketId;
+    private int productId;
+    private String productName;
+    private Date ticketDate;
+    private int quantity;
     private double totalPrice;
 
-    public Ticket(int productId, int quantity, double totalPrice) {
-        this.id = contador++;
-        this.venta = new ArrayList<>();
-        this.date = new Date();
+    public Ticket(int ticketId, int productId, String productName, Date ticketDate, int quantity, double totalPrice ) {
+        this.ticketId = ticketId;
+        this.productId = productId;
+        this.productName = productName;
+        this.ticketDate = ticketDate;
+        this.quantity = quantity;
         this.totalPrice = totalPrice;
-
-        // Agregar el producto al ticket al momento de la creación
-        addProductById(productId, quantity, Shop.getInstance());
+    }
+    public Ticket(int productId, String productName, int quantity) {
+        this.ticketId = generateTicketId();
+        this.productId = productId;
+        this.productName = productName;
+        this.ticketDate = new Date();
+        this.quantity = quantity;
+        // Puedes calcular el precio total aquí o en otro método, dependiendo de tus necesidades
+        this.totalPrice = calculateTotalPrice();
     }
 
-    public int getId() {
-        return id;
+    private int generateTicketId() {
+        lastTicketId++;
+        return lastTicketId;
     }
 
-    public ArrayList<StockItem> getVenta() {
-        return venta;
+    private double calculateTotalPrice() {
+        // Implementa la lógica para calcular el precio total, según tus necesidades
+        // Puedes obtener el precio del producto desde otra fuente o utilizar una lógica específica
+        return 0.0;  // Reemplaza esto con tu lógica real
     }
 
-    public Date getDate() {
-        return date;
+    // Métodos getter para acceder a los atributos del ticket
+
+    public int getTicketId() {
+        return ticketId;
     }
 
-    public void updateTotalPrice() {
-        double total = 0;
+    public int getProductId() {
+        return productId;
+    }
 
-        for (StockItem item : this.venta) {
-            total += item.getProduct().getPrice() * item.getQuantity();
-        }
+    public String getProductName() {
+        return productName;
+    }
 
-        this.totalPrice = total;
+    public Date getTicketDate() {
+        return ticketDate;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 
     public double getTotalPrice() {
-        double total = 0;
-
-        for (StockItem item : this.venta) {
-            total += item.getProduct().getPrice() * item.getQuantity();
-        }
-
-        this.totalPrice = total;
-        return total;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setVenta(ArrayList<StockItem> venta) {
-        this.venta = venta;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public void addProductById(int productId, int quantity, Shop shop) {
-        Product product = shop.getProductById(productId);
-
-        if (product != null) {
-            Stock stock = shop.encontrarStock(product);
-
-            for (StockItem item : this.venta) {
-                if (item.getProduct().equals(product)) {
-                    item.setQuantity(item.getQuantity() + quantity);
-                    updateTotalPrice();
-                    if (stock != null) {
-                        stock.reduceStock(product, quantity);
-                    }
-                    return;
-                }
-            }
-
-            StockItem newItem = new StockItem(product, quantity);
-            this.venta.add(newItem);
-            updateTotalPrice();
-            if (stock != null) {
-                stock.reduceStock(product, quantity);
-            }
-        } else {
-            System.out.println("Producto no encontrado con el ID: " + productId);
-        }
-    }
-
-    @Override
-    public void leerBd() {
-        TicketDB ticket = new TicketDB();
-        ticket.leerBd();
-    }
-
-    @Override
-    public void guardarBd() {
-        TicketDB ticket = new TicketDB();
-        ticket.guardarBd();
+        return totalPrice;
     }
 }
+

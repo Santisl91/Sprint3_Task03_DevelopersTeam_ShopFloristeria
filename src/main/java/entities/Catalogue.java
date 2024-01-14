@@ -1,42 +1,45 @@
 package entities;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.json.JSONObject;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.File;
-import java.io.IOException;
-
-import interfaces.IConexion;
 import interfaces.Ipersistence;
 import persistence.CatalogoBD;
-import persistence.ConexionFichero;
-import persistence.FactoryBD;
 
 public class Catalogue implements Ipersistence {
-    private List<Product> items = new ArrayList<>();
+    private static Catalogue instance;
+    private List<Product> prodItems = new ArrayList<>();
+
+    private Catalogue() {
+        // Constructor privado para evitar la creación de instancias directas
+    }
+
+    public static Catalogue getInstance() {
+        if (instance == null) {
+            instance = new Catalogue();
+        }
+        return instance;
+    }
 
     public List<Product> getItems() {
-        return items;
+        return prodItems;
     }
 
     public void addItem(Product item) {
-        items.add(item);
+        prodItems.add(item);
     }
 
     public void displayCatalog() {
         System.out.println("Catálogo:");
-        for (Product item : items) {
+        for (Product item : prodItems) {
             System.out.println(item);
         }
     }
 
     public void removeProductById(int productId) {
-        Iterator<Product> iterator = items.iterator();
+        Iterator<Product> iterator = prodItems.iterator();
 
         while (iterator.hasNext()) {
             Product product = iterator.next();
@@ -50,16 +53,36 @@ public class Catalogue implements Ipersistence {
         System.out.println("No se encontró el producto con ID '" + productId + "' en el catálogo.");
     }
 
+
     @Override
-    public void leerBd() {
+    public void leerCatalogo(String catalogoFileName) throws IOException {
         CatalogoBD cat = new CatalogoBD(this);
-        cat.leerBd();
+        cat.leerBd(catalogoFileName);
+    }
+
+    @Override
+    public void leerStock(String stockFileName) throws IOException {
 
     }
 
     @Override
-    public void guardarBd() {
+    public void leerTicket(String ticketFileName) throws IOException {
+
+    }
+
+    @Override
+    public void guardarCatalogo(String catalogoFileName) throws IOException {
         CatalogoBD cat = new CatalogoBD(this);
-        cat.guardarBd();
+        cat.guardarBd(catalogoFileName);
+    }
+
+    @Override
+    public void guardarStock(String stockFileName) throws IOException {
+
+    }
+
+    @Override
+    public void guardarTicket(String ticketFileName) throws IOException {
+
     }
 }

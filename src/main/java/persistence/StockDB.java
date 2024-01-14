@@ -1,6 +1,7 @@
 package persistence;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import entities.Product;
 import entities.Stock;
 import entities.StockItem;
@@ -9,64 +10,76 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class StockDB {
     private Stock stockDb;
+    private static StockDB instance;
 
     public StockDB(Stock stock) {
         stockDb = stock;
     }
 
-    public void leerBd() throws IOException {
+    public StockDB() {
+
+    }
+    public static StockDB getInstance() {
+        if (instance == null) {
+            instance = new StockDB();
+        }
+        return instance;
+    }
+
+    public Stock leerBd(String filePath) throws IOException {
         ConexionFichero f = (ConexionFichero) FactoryBD.getConexionBD("TXT");
-        f.setNombre("Stock.txt");
+        f.setNombre(filePath);
 
         File file = new File(f.getNombre());
         if (!file.exists()) {
             throw new IOException("El archivo Stock.txt no existe");
         }
 
-        JsonNode jsonNode = (JsonNode) f.leer();
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode rootNode = objectMapper.readTree(file);
 
-        if (jsonNode != null) {
-            if (jsonNode.has("stock")) {
-                JsonNode stockNode = jsonNode.get("stock");
-                for (JsonNode stockItemNode : stockNode) {
-                    int productId = stockItemNode.get("id").asInt();
-                    int quantity = stockItemNode.get("cantidad").asInt();
+        if (rootNode != null && rootNode.has("stock")) {
+            JsonNode stockNode = rootNode.get("stock");
 
-                    // Construir un objeto StockItem con id y cantidad
-                    Product product = new Product("Nombre Predeterminado", 0.0);
-                    product.setId(productId);
+            Map<Integer, Integer> stockItems = new HashMap<>();
 
-                    StockItem item = new StockItem(product, quantity);
-                    stockDb.getItems().add(item);
-                }
-            } else {
-                throw new IOException("Error al leer el archivo JSON - No se encontró el nodo 'stock'");
+            for (JsonNode stockItemNode : stockNode) {
+                int productId = stockItemNode.get("id").asInt();
+                int quantity = stockItemNode.get("cantidad").asInt();
+
+                stockItems.put(productId, quantity);
             }
+
+            Stock.getInstance().setStockItems(stockItems);
         } else {
-            throw new IOException("Error al leer el archivo JSON - El contenido es nulo");
+            throw new IOException("Error al leer el archivo JSON - No se encontró el nodo 'stock'");
         }
+
+        return null;
     }
 
 
-    public void guardarBd() throws IOException {
+    public void guardarBd(String filePath) throws IOException {
         ConexionFichero f = (ConexionFichero) FactoryBD.getConexionBD("TXT");
-        f.setNombre("Stock.txt");
-
+        f.setNombre(filePath);
+        Stock stock = Stock.getInstance();
         JSONArray stockArray = new JSONArray();
-        for (StockItem stockItem : stockDb.getItems()) {
+        for (Map.Entry<Integer, Integer> entry : stock.getItems().entrySet()) {
             JSONObject stockItemObject = new JSONObject();
-            stockItemObject.put("id", stockItem.getProduct().getId());
-            stockItemObject.put("cantidad", stockItem.getQuantity());
+            stockItemObject.put("id", entry.getKey());
+            stockItemObject.put("cantidad", entry.getValue());
             stockArray.put(stockItemObject);
         }
 
         JSONObject jsonStock = new JSONObject();
         jsonStock.put("stock", stockArray);
 
-        f.write(jsonStock);  // Agrega sangrías y saltos de línea para hacer el JSON más legible
+        f.write(jsonStock);
     }
 
 }

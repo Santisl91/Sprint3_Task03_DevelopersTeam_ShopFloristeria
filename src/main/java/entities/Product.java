@@ -7,6 +7,12 @@ public class Product {
     private static int contador = 1;
     private double price;
 
+    public Product(String name, double price) {
+        this.name = name;
+        this.price = price;
+        this.id = contador++;
+    }
+
     public String getTipo() {
         return tipo;
     }
@@ -16,21 +22,14 @@ public class Product {
     }
 
     public void setId(int id) {
-        id = id;
+        this.id = id;
         if (contador < id) {
             contador = id;
         }
-
     }
 
     public int getId() {
         return id;
-    }
-
-    public Product(String name, double price) {
-        this.name = name;
-        this.price = price;
-        this.id = contador++;
     }
 
     public String getName() {
@@ -45,5 +44,4 @@ public class Product {
     public double getPrice() {
         return price;
     }
-
 }

@@ -1,23 +1,31 @@
 package entities;
 
 public class StockItem {
-    private Product product;
+    private int productId;
     private int quantity;
 
-    public StockItem(Product product, int quantity) {
-        this.product = product;
+    public StockItem(int productId, int quantity) {
+        this.productId = productId;
         this.quantity = quantity;
     }
-    public Product getProduct() {
-        return product;
+
+    public int getProductId() {
+        return productId;
     }
+
     public int getQuantity() {
         return quantity;
     }
-    public void setProduct(Product product) {
-        this.product = product;
+
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
+
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+    public static StockItem createProductWithZeroQuantity(int productId) {
+        return new StockItem(productId, 0);
+    }
+
 }

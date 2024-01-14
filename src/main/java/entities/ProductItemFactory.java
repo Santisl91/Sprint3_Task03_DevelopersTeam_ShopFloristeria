@@ -1,7 +1,6 @@
 package entities;
 
 import app.Shop;
-
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -21,23 +20,18 @@ public class ProductItemFactory {
                     double treePrice = scanner.nextDouble();
                     Tree tree = new Tree(treeName, treeHeight, treePrice);
                     catalog.addItem(tree);
-                    catalog.guardarBd();
-                    Stock stockTree = shop.encontrarStock(tree);
-                    if (stockTree == null) {
-                        stockTree = Stock.getInstance();
-                        System.out.println("Stock creado para el árbol. ¿Desea agregar cantidad? (S/N)");
-                        char choice = scanner.next().charAt(0);
-                        if (choice == 'S' || choice == 's') {
-                            System.out.println("Ingrese la cantidad:");
-                            int quantity = scanner.nextInt();
-                            stockTree.addStockItem(tree, quantity);
-                            stockTree.guardarBd();
-                            System.out.println("Stock creado.");
-                        }
-                    } else {
+                    catalog.guardarCatalogo(shop.getCatalogueDbName());
+                    Stock stockTree = Stock.getInstance(); // Obtener la instancia única de Stock
+                    System.out.println("¿Desea agregar stock? (S/N)");
+                    char choice1 = scanner.next().charAt(0);
+                    if (choice1 == 'S' || choice1 == 's') {
+                        System.out.println("Ingrese la cantidad:");
+                        int quantity = scanner.nextInt();
+                        StockItem stockItem = new StockItem(tree.getId(), quantity);
+                        stockTree.addStockItem(stockItem);
+                        stockTree.guardarStock(shop.getStockDbName());
                         System.out.println("Stock creado.");
                     }
-
                     return tree;
 
                 case 2:
@@ -49,13 +43,18 @@ public class ProductItemFactory {
                     double flowerPrice = scanner.nextDouble();
                     Flower flower = new Flower(flowerName, flowerColor, flowerPrice);
                     catalog.addItem(flower);
-                    Stock stockFlower = shop.encontrarStock(flower);
-                    if (stockFlower != null) {
-                        stockFlower.addStockItem(flower, 0); // 0 es la cantidad inicial
-                    } else {
-                        System.out.println("Error: Stock no encontrado para el árbol.");
+                    catalog.guardarCatalogo(shop.getCatalogueDbName());
+                    Stock stockFlower = Stock.getInstance(); // Obtener la instancia única de Stock
+                    System.out.println("¿Desea agregar stock? (S/N)");
+                    char choice2 = scanner.next().charAt(0);
+                    if (choice2 == 'S' || choice2 == 's') {
+                        System.out.println("Ingrese la cantidad:");
+                        int quantity = scanner.nextInt();
+                        StockItem stockItem = new StockItem(flower.getId(), quantity);
+                        stockFlower.addStockItem(stockItem);
+                        stockFlower.guardarStock(shop.getStockDbName());
+                        System.out.println("Stock creado.");
                     }
-
                     return flower;
 
                 case 3:
@@ -67,13 +66,18 @@ public class ProductItemFactory {
                     double decoPrice = scanner.nextDouble();
                     Decoration decoration = new Decoration(decorationName, decorationMaterial, decoPrice);
                     catalog.addItem(decoration);
-                    Stock stockDeco = shop.encontrarStock(decoration);
-                    if (stockDeco != null) {
-                        stockDeco.addStockItem(decoration, 0); // 0 es la cantidad inicial
-                    } else {
-                        System.out.println("Error: Stock no encontrado para el árbol.");
+                    catalog.guardarCatalogo(shop.getCatalogueDbName());
+                    Stock stockDeco = Stock.getInstance(); // Obtener la instancia única de Stock
+                    System.out.println("¿Desea agregar stock? (S/N)");
+                    char choice3 = scanner.next().charAt(0);
+                    if (choice3 == 'S' || choice3 == 's') {
+                        System.out.println("Ingrese la cantidad:");
+                        int quantity = scanner.nextInt();
+                        StockItem stockItem = new StockItem(decoration.getId(), quantity);
+                        stockDeco.addStockItem(stockItem);
+                        stockDeco.guardarStock(shop.getStockDbName());
+                        System.out.println("Stock creado.");
                     }
-
                     return decoration;
 
                 case 4:
@@ -99,14 +103,9 @@ public class ProductItemFactory {
 
                 case 7:
                     // Ver todos los tickets
-                    for (Ticket ticket : shop.getTickets()) {
-                        System.out.println(ticket);
-                    }
-                    return null;
 
-                case 8:
-                   shop.getStockProducts();
-                    break;
+
+                case 8://TODO: Ver stock con cantidades de productos de clase Shop
 
                 case 9:
                     // Crear floristería
@@ -114,35 +113,7 @@ public class ProductItemFactory {
                     return null;
 
                 case 10:
-                    int newTicketId = shop.getNextTicketId();
-                    Ticket newTicket = new Ticket(newTicketId, 0, 0.0);
-                    shop.addTicket(newTicket);
 
-                    System.out.println("Ingrese el ID del producto a agregar al ticket:");
-                    catalog.displayCatalog();
-                    int productIdToAdd = scanner.nextInt();
-
-                    Product productToAdd = shop.getProductById(productIdToAdd);
-                    Stock stock = shop.encontrarStock(productToAdd);
-
-                    if (productToAdd != null && stock != null) {
-                        newTicket.addProductById(productIdToAdd, 0, shop);
-
-                        System.out.println("Ingrese la cantidad del producto:");
-                        int quantityToAdd = scanner.nextInt();
-
-                        stock.reduceStock(productToAdd, quantityToAdd);
-
-                        newTicket.updateTotalPrice();
-
-                        newTicket.guardarBd();
-
-                        System.out.println("Producto agregado al ticket y stock actualizado.");
-                    } else {
-                        System.out.println("Error: Producto no encontrado en el stock.");
-                    }
-
-                    return newTicket;
 
 
 
