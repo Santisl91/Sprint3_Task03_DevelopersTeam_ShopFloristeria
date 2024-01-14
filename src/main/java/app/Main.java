@@ -35,7 +35,11 @@ public class Main {
                 scanner.nextLine();
 
                 if (eleccion != 0) {
-                    Object nuevoItem = ProductItemFactory.createCatalogItem(eleccion, catalogo, shop);
+                    if (eleccion == 8) {
+                        ProductItemFactory.verStockConCantidades(shop);
+                    } else {
+                        Object nuevoItem = ProductItemFactory.createCatalogItem(eleccion, catalogo, shop);
+                    }
                 } else {
                     System.out.println("Programa cerrado.");
                 }
@@ -44,7 +48,6 @@ public class Main {
 
             catalogo.guardarCatalogo(shop.getCatalogueDbName());
             stock.guardarStock(shop.getStockDbName());
-
         }
     }
 
@@ -99,7 +102,7 @@ public class Main {
 
                     TicketDB ticketDB = TicketDB.getInstance();
                     ticketDB.guardarBd(shop.getTicketDbName());
-
+                    stockDB.guardarBd(shop.getStockDbName());
 
                     System.out.println("Nueva floristería creada: " + shop.getName());
                 }
