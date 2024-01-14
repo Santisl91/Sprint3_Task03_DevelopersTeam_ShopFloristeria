@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 
 public class ProductItemFactory {
+
     public static Object createCatalogItem(int itemType, Catalogue catalog, Shop shop) throws IOException {
         Scanner scanner = new Scanner(System.in);
 
@@ -106,6 +107,8 @@ public class ProductItemFactory {
 
 
                 case 8://TODO: Ver stock con cantidades de productos de clase Shop
+                    verStockConCantidades(shop);
+                    break;
 
                 case 9:
                     // Crear floristería
@@ -128,5 +131,8 @@ public class ProductItemFactory {
             }
         }
     }
+    public static void verStockConCantidades(Shop shop) {
+        Stock stock = Stock.getInstance();
+        stock.mostrarStockConCantidades();
+    }
 }
-

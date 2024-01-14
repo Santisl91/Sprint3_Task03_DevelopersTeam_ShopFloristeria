@@ -40,7 +40,6 @@ public class Stock implements Ipersistence {
         }
     }
 
-
     public void reduceStock(Product product, int quantity) {
         int productId = product.getId();
         if (stockItems.containsKey(productId)) {
@@ -56,7 +55,22 @@ public class Stock implements Ipersistence {
             System.out.println("Error: Producto no encontrado en el stock.");
         }
     }
+    public void mostrarStockConCantidades() {
+        Catalogue catalogue = Catalogue.getInstance();
 
+        System.out.println("\n--- Stock con cantidades de productos ---");
+        for (Map.Entry<Integer, Integer> entry : stockItems.entrySet()) {
+            int productId = entry.getKey();
+            int quantity = entry.getValue();
+            Product product = catalogue.getProductById(productId);
+
+            if (product != null) {
+                System.out.println("- Producto: " + product.getName() + " - Cantidad: " + quantity);
+            } else {
+                System.out.println("Producto con ID '" + productId + "' no encontrado en el catálogo.");
+            }
+        }
+    }
 
 
     @Override

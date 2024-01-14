@@ -52,7 +52,14 @@ public class Catalogue implements Ipersistence {
 
         System.out.println("No se encontró el producto con ID '" + productId + "' en el catálogo.");
     }
-
+    public Product getProductById(int productId) {
+        for (Product product : prodItems) {
+            if (product.getId() == productId) {
+                return product;
+            }
+        }
+        return null;
+    }
 
     @Override
     public void leerCatalogo(String catalogoFileName) throws IOException {
