@@ -59,30 +59,29 @@ public class Catalogue implements Ipersistence {
         CatalogoBD cat = new CatalogoBD(this);
         cat.leerBd(catalogoFileName);
     }
-
-    @Override
-    public void leerStock(String stockFileName) throws IOException {
-
-    }
-
-    @Override
-    public void leerTicket(String ticketFileName) throws IOException {
-
-    }
-
     @Override
     public void guardarCatalogo(String catalogoFileName) throws IOException {
         CatalogoBD cat = new CatalogoBD(this);
         cat.guardarBd(catalogoFileName);
     }
 
+
+    @Override
+    public void leerStock(String stockFileName) throws IOException {
+    }
+    @Override
+    public void leerTicket(String ticketFileName) throws IOException {
+    }
+    @Override
+    public void guardarShop() throws IOException {
+    }
     @Override
     public void guardarStock(String stockFileName) throws IOException {
-
     }
-
     @Override
     public void guardarTicket(String ticketFileName) throws IOException {
-
+    }
+    @Override
+    public void leerShop() throws IOException {
     }
 }

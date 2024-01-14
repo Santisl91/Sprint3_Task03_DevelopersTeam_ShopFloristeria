@@ -27,6 +27,14 @@ public class Stock implements Ipersistence {
         }
         return instance;
     }
+    public void removeProductById(int productId) {
+        if (stockItems.containsKey(productId)) {
+            stockItems.remove(productId);
+            System.out.println("Producto con ID '" + productId + "' eliminado del stock.");
+        } else {
+            System.out.println("No se encontró el producto con ID '" + productId + "' en el stock.");
+        }
+    }
     public void setStockItems(Map<Integer, Integer> stockItems) {
         this.stockItems = stockItems;
     }
@@ -58,35 +66,33 @@ public class Stock implements Ipersistence {
     }
 
 
-
-    @Override
-    public void guardarCatalogo(String catalogoFileName) throws IOException {
-
-    }
-
     @Override
     public void guardarStock(String stockFileName) throws IOException {
         StockDB stock = new StockDB(this);
         stock.guardarBd(stockFileName);
     }
-
-
-    @Override
-    public void guardarTicket(String ticketFileName) throws IOException {
-
-    }
-
-    @Override
-    public void leerCatalogo(String catalogoFileName) throws IOException {
-
-    }
-
     @Override
     public void leerStock(String stockFileName) throws IOException {
         StockDB stockDB1 = StockDB.getInstance();
         stockDB1.leerBd(stockFileName);
     }
 
+
+    @Override
+    public void guardarShop() throws IOException {
+    }
+    @Override
+    public void guardarCatalogo(String catalogoFileName) throws IOException {
+    }
+    @Override
+    public void guardarTicket(String ticketFileName) throws IOException {
+    }
+    @Override
+    public void leerShop() throws IOException {
+    }
+    @Override
+    public void leerCatalogo(String catalogoFileName) throws IOException {
+    }
     @Override
     public void leerTicket(String ticketFileName) throws IOException {
 

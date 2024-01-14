@@ -1,11 +1,17 @@
 package app;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class Shop {
     private String name;
     private String catalogueDbName;
     private String stockDbName;
     private String ticketDbName;
 
+    public Shop(){
+
+    }
     public Shop(String name) {
         this.name = name;
         this.catalogueDbName = name + "_Catalogue.txt";
@@ -50,5 +56,22 @@ public class Shop {
 
     public void setTicketDbName(String ticketDbName) {
         this.ticketDbName = ticketDbName;
+    }
+    public void crearArchivosEnBlanco() {
+        try {
+            // Crear archivos en blanco
+            FileWriter catalogoWriter = new FileWriter(catalogueDbName);
+            catalogoWriter.close();
+
+            FileWriter stockWriter = new FileWriter(stockDbName);
+            stockWriter.close();
+
+            FileWriter ticketWriter = new FileWriter(ticketDbName);
+            ticketWriter.close();
+
+            System.out.println("Archivos en blanco creados para la tienda '" + name + "'.");
+        } catch (IOException e) {
+            System.out.println("Error al crear archivos en blanco: " + e.getMessage());
+        }
     }
 }

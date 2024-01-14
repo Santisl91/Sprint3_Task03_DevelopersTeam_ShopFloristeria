@@ -84,21 +84,29 @@ public class ProductItemFactory {
                     catalog.displayCatalog();
                     System.out.println("Ingrese el ID del árbol a retirar:");
                     int treeToRemove = scanner.nextInt();
+                    Stock stock = Stock.getInstance();
                     catalog.removeProductById(treeToRemove);
+                    stock.removeProductById(treeToRemove);
                     return null;
 
                 case 5:
                     catalog.displayCatalog();
                     System.out.println("Ingrese el ID de la flor a retirar:");
                     int flowerToRemove = scanner.nextInt();
+                    Stock stock1 = Stock.getInstance();
                     catalog.removeProductById(flowerToRemove);
+                    stock1.removeProductById(flowerToRemove);
+
                     return null;
 
                 case 6:
                     catalog.displayCatalog();
                     System.out.println("Ingrese el ID de la decoración a retirar:");
                     int decorationToRemove = scanner.nextInt();
+                    Stock stock2 = Stock.getInstance();
                     catalog.removeProductById(decorationToRemove);
+                    stock2.removeProductById(decorationToRemove);
+
                     return null;
 
                 case 7:
@@ -108,8 +116,11 @@ public class ProductItemFactory {
                 case 8://TODO: Ver stock con cantidades de productos de clase Shop
 
                 case 9:
-                    // Crear floristería
-                    System.out.println("Ya se creó la floristería.");
+                    System.out.println("Crear nueva floristería.");
+                    System.out.print("Ingrese el nombre de la floristería: ");
+                    String newFlowerShopName = scanner.nextLine();
+                    ShopManager shopManager = ShopManager.getInstance();
+                    shopManager.crearNuevaFloristeria(newFlowerShopName);
                     return null;
 
                 case 10:

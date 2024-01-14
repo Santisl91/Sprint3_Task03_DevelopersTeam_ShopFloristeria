@@ -29,40 +29,35 @@ public class TicketManager implements Ipersistence {
     public List<Ticket> getTickets() {
         return tickets;
     }
-
     @Override
-    public void guardarCatalogo(String catalogoFileName) throws IOException {
-
+    public void leerTicket(String ticketFileName) throws IOException {
+        TicketDB ticketDB = TicketDB.getInstance();
+        ticketDB.leerBd(ticketFileName);
     }
-
-    @Override
-    public void guardarStock(String stockFileName) throws IOException {
-
-    }
-
     @Override
     public void guardarTicket(String ticketFileName) throws IOException {
         TicketDB ticketDB1 = TicketDB.getInstance();
         ticketDB1.guardarBd(ticketFileName);
     }
 
+
+    @Override
+    public void leerShop() throws IOException {
+    }
+    @Override
+    public void guardarShop() throws IOException {
+    }
+    @Override
+    public void guardarCatalogo(String catalogoFileName) throws IOException {
+    }
+    @Override
+    public void guardarStock(String stockFileName) throws IOException {
+    }
     @Override
     public void leerCatalogo(String catalogoFileName) throws IOException {
-
     }
-
     @Override
     public void leerStock(String stockFileName) throws IOException {
-
     }
-
-    @Override
-    public void leerTicket(String ticketFileName) throws IOException {
-        TicketDB ticketDB = TicketDB.getInstance();
-        ticketDB.leerBd(ticketFileName);
-    }
-
-
-    // Puedes agregar más métodos según tus necesidades, como eliminar un ticket, obtener un ticket específico, etc.
 }
 

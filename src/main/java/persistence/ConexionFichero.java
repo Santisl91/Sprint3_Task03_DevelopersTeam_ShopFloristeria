@@ -55,10 +55,10 @@ public class ConexionFichero implements IConexion {
 	public void write(JSONObject jsonObj) {
 		try (FileWriter fileWriter = new FileWriter(this.nombre)) {
 			fileWriter.write(jsonObj.toString());
+			fileWriter.write(System.lineSeparator());  // Agregar un salto de línea
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 	@Override
 	public void conectar() {
