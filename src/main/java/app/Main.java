@@ -7,6 +7,7 @@ import persistence.TicketDB;
 import app.Shop;
 
 import java.io.IOException;
+import java.lang.runtime.SwitchBootstraps;
 import java.util.Scanner;
 
 import persistence.ShopDB;
@@ -48,6 +49,8 @@ public class Main {
 
             catalogo.guardarCatalogo(shop.getCatalogueDbName());
             stock.guardarStock(shop.getStockDbName());
+            ticket.guardarTicket(shop.getTicketDbName());
+            shopManager.guardarShop();
         }
     }
 
@@ -71,49 +74,51 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Bienvenido a la aplicación de floristería.");
 
-        ShopManager shM = ShopManager.getInstance();
-        ShopDB shopDB = ShopDB.getInstance();
-        Shop shop = null;
-
-        shM.leerShop();
+        ShopManager shopManager = ShopManager.getInstance();
+        shopManager.leerShop();
         System.out.println(shopManager.toString());
+
+        Shop selectedShop = null;
 
         do {
             System.out.print("Ingrese el nombre de la floristería: ");
             String flowerShopName = scanner.nextLine();
 
-            shop = shopManager.getShop(flowerShopName);
+            selectedShop = shopManager.getShop(flowerShopName);
 
-            if (shop == null) {
+            if (selectedShop == null) {
                 System.out.println("No se encontró la floristería '" + flowerShopName + "'.");
                 System.out.print("¿Deseas crear una nueva floristería? (s/n): ");
                 String crearNueva = scanner.nextLine();
 
                 if (crearNueva.equalsIgnoreCase("s")) {
-                    shop = new Shop(flowerShopName);
-                    shM.guardarShop();
+                    // Crear una nueva tienda
+                    Shop newShop = new Shop(flowerShopName);
+
+                    // Guardar la nueva tienda y sus datos
+                    shopManager.addShop(newShop);
+                    shopManager.guardarShop();
 
                     // Crear archivos TXT asociados a la nueva floristería
                     CatalogoBD catalogoBD = CatalogoBD.getInstance();
-                    catalogoBD.guardarBd(shop.getCatalogueDbName());
+                    catalogoBD.guardarBd(newShop.getCatalogueDbName());
 
                     StockDB stockDB = new StockDB();
-                    stockDB.guardarBd(shop.getStockDbName());
+                    stockDB.guardarBd(newShop.getStockDbName());
 
                     TicketDB ticketDB = TicketDB.getInstance();
-                    ticketDB.guardarBd(shop.getTicketDbName());
-                    stockDB.guardarBd(shop.getStockDbName());
+                    ticketDB.guardarBd(newShop.getTicketDbName());
 
-                    System.out.println("Nueva floristería creada: " + shop.getName());
+                    System.out.println("Nueva floristería creada: " + newShop.getName());
                 }
             } else {
-                System.out.println("Floristería seleccionada: " + shop.getName());
+                System.out.println("Floristería seleccionada: " + selectedShop.getName());
 
                 try {
-                    shM.leerShop();
-                    catalogo.leerCatalogo(shop.getCatalogueDbName());
-                    stock.leerStock(shop.getStockDbName());
-                    ticket.leerTicket(shop.getTicketDbName());
+                    shopManager.leerShop();
+                    catalogo.leerCatalogo(selectedShop.getCatalogueDbName());
+                    stock.leerStock(selectedShop.getStockDbName());
+                    ticket.leerTicket(selectedShop.getTicketDbName());
 
                 } catch (IOException e) {
                     System.out.println("Error al leer los archivos de la floristería: " + e.getMessage());
@@ -123,9 +128,10 @@ public class Main {
             }
 
             System.out.println("");
-        } while (shop == null);
+        } while (selectedShop == null);
 
-        return shop;
+        return selectedShop;
     }
+
 }
 

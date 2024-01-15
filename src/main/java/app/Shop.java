@@ -14,9 +14,9 @@ public class Shop {
     }
     public Shop(String name) {
         this.name = name;
-        this.catalogueDbName = name + "_Catalogue.txt";
-        this.stockDbName = name + "_Stock.txt";
-        this.ticketDbName = name + "_Ticket.txt";
+        this.catalogueDbName = name + ".Catalogue.txt";
+        this.stockDbName = name + ".Stock.txt";
+        this.ticketDbName = name + ".Ticket.txt";
     }
 
     public Shop(String name, String catalogueDbName, String stockDbName, String ticketDbName) {

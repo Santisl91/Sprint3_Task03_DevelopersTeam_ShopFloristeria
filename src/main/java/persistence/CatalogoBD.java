@@ -45,26 +45,36 @@ public class CatalogoBD {
         }
 
         jsonNode = (JsonNode) f.leer();
+        if (jsonNode != null) {
+            JsonNode cat = jsonNode.get(Catalogue.class.toString());
 
-        JsonNode cat = jsonNode.get(Catalogue.class.toString());
-        for (JsonNode prod : cat) {
-            String tipo = prod.get("tipo").asText();
-            if (tipo.equals(Flower.class.toString())) {
-                Flower fl = new Flower(prod.get("id").asInt(), prod.get("name").asText(), prod.get("color").asText(), prod.get("price").asDouble());
-                catalogoDb.addItem(fl);
+            if (cat != null) {
+                for (JsonNode prod : cat) {
+                    String tipo = prod.get("tipo").asText();
+                    if (tipo.equals(Flower.class.toString())) {
+                        Flower fl = new Flower(prod.get("id").asInt(), prod.get("name").asText(), prod.get("color").asText(), prod.get("price").asDouble());
+                        catalogoDb.addItem(fl);
 
-            } else if (tipo.equals(Tree.class.toString())) {
-                Tree tr = new Tree(prod.get("id").asInt(), prod.get("name").asText(), prod.get("height").asText(), prod.get("price").asDouble());
-                catalogoDb.addItem(tr);
+                    } else if (tipo.equals(Tree.class.toString())) {
+                        Tree tr = new Tree(prod.get("id").asInt(), prod.get("name").asText(), prod.get("height").asText(), prod.get("price").asDouble());
+                        catalogoDb.addItem(tr);
 
-            } else if (tipo.equals(Decoration.class.toString())) {
-                Decoration dc = new Decoration(prod.get("id").asInt(), prod.get("name").asText(), prod.get("material").asText(), prod.get("price").asDouble());
-                catalogoDb.addItem(dc);
+                    } else if (tipo.equals(Decoration.class.toString())) {
+                        Decoration dc = new Decoration(prod.get("id").asInt(), prod.get("name").asText(), prod.get("material").asText(), prod.get("price").asDouble());
+                        catalogoDb.addItem(dc);
 
+                    }
+                }
+            } else {
+                System.out.println("Error: No se encontró la clave del catálogo en el archivo JSON.");
             }
+        } else {
+            System.out.println("Error: El archivo JSON está vacío o no se pudo leer correctamente.");
         }
+
         return null;
     }
+
 
     public void guardarBd(String filePath) {
         if (this.catalogoDb != null) {

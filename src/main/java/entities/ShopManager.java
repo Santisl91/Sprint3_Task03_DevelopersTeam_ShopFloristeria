@@ -35,17 +35,10 @@ public class ShopManager implements Ipersistence {
         return shopMap.get(flowerShopName);
     }
     public Map<String, Shop> getItems() {
-        Map<String, Shop> shopMap = new HashMap<>();
-
-        for (Shop shop : shopMap.values()) {
-            shopMap.put(shop.getName(), shop);
-        }
-
-        return shopMap;
+        return new HashMap<>(shopMap);
     }
     public void crearNuevaFloristeria(String newFlowerShopName) throws IOException {
-        Shop existingShop = getShop(newFlowerShopName);
-        if (existingShop != null) {
+        if (shopMap.containsKey(newFlowerShopName)) {
             System.out.println("Error: La floristería ya existe.");
         } else {
             // Crear una nueva tienda
@@ -71,13 +64,18 @@ public class ShopManager implements Ipersistence {
 
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder("Lista de Tiendas:\n");
+        StringBuilder sb = new StringBuilder();
+        sb.append("Lista de tiendas:\n");
 
-        for (Map.Entry<String, Shop> entry : shopMap.entrySet()) {
-            result.append(entry.getValue()).append("\n");
+        for (Shop shop : shopMap.values()) {
+            sb.append("Nombre: ").append(shop.getName())
+                    .append(", Catálogo: ").append(shop.getCatalogueDbName())
+                    .append(", Stock: ").append(shop.getStockDbName())
+                    .append(", Ticket: ").append(shop.getTicketDbName())
+                    .append("\n");
         }
 
-        return result.toString();
+        return sb.toString();
     }
 
     @Override

@@ -1,0 +1,15 @@
+{
+  "pepe": {
+    "Nombre": "pepe",
+    "Catalogo": "pepe.Catalogue.txt",
+    "Stock": "pepe.Stock.txt",
+    "Ticket": "pepe.Ticket.txt"
+  },
+  "otraTienda": {
+    "Nombre": "otraTienda",
+    "Catalogo": "otraTienda.Catalogue.txt",
+    "Stock": "otraTienda.Stock.txt",
+    "Ticket": "otraTienda.Ticket.txt"
+  }
+
+}
