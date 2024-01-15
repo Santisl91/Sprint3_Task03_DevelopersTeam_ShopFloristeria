@@ -8,10 +8,11 @@ import java.util.Map;
 
 import app.Shop;
 import interfaces.Ipersistence;
-import persistence.CatalogoBD;
-import persistence.ShopDB;
-import persistence.StockDB;
-import persistence.TicketDB;
+import persistence.CatalogueDb;
+import persistence.ShopDb;
+import persistence.ShopDb;
+import persistence.StockDb;
+import persistence.TicketDb;
 
 public class ShopManager implements Ipersistence {
     private static ShopManager instance;
@@ -37,7 +38,7 @@ public class ShopManager implements Ipersistence {
     public Map<String, Shop> getItems() {
         return new HashMap<>(shopMap);
     }
-    public void crearNuevaFloristeria(String newFlowerShopName) throws IOException {
+    public Object crearNuevaFloristeria(String newFlowerShopName) throws IOException {
         if (shopMap.containsKey(newFlowerShopName)) {
             System.out.println("Error: La floristería ya existe.");
         } else {
@@ -49,17 +50,19 @@ public class ShopManager implements Ipersistence {
             guardarShop();
 
             // Crear archivos TXT asociados a la nueva floristería
-            CatalogoBD newCatalogoBD = CatalogoBD.getInstance();
+            CatalogueDb newCatalogoBD = CatalogueDb.getInstance();
             newCatalogoBD.guardarBd(newShop.getCatalogueDbName());
 
-            StockDB newStockDB = new StockDB();
+            StockDb newStockDB = new StockDb();
             newStockDB.guardarBd(newShop.getStockDbName());
 
-            TicketDB newTicketDB = TicketDB.getInstance();
+            TicketDb newTicketDB = TicketDb.getInstance();
             newTicketDB.guardarBd(newShop.getTicketDbName());
 
             System.out.println("Nueva floristería creada: " + newShop.getName());
         }
+
+        return null;
     }
 
     @Override
@@ -80,13 +83,13 @@ public class ShopManager implements Ipersistence {
 
     @Override
     public void guardarShop() throws IOException {
-        ShopDB sh = new ShopDB();
+        ShopDb sh = new ShopDb();
         sh.guardarShop();
     }
 
     @Override
     public void leerShop() throws IOException {
-        ShopDB sh = new ShopDB();
+        ShopDb sh = new ShopDb();
         sh.leerShop();
     }
 

@@ -1,7 +1,6 @@
 package entities;
 
 public class Flower extends Product {
-
 	private String color;
 
 	public Flower(String name, String color, double price) {
@@ -9,7 +8,6 @@ public class Flower extends Product {
 		this.color = color;
 		this.setTipo(Flower.class.toString());
 	}
-
 	public Flower(int id, String name, String color, double price) {
 		this(name, color, price);
 		this.setId(id);

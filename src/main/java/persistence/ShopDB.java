@@ -2,42 +2,40 @@ package persistence;
 
 import app.Shop;
 import entities.ShopManager;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Map;
 
-public class ShopDB {
+public class ShopDb {
 
     private Shop shop;
     private ShopManager shopManager;
 
-    private static ShopDB instance;
+    private static ShopDb instance;
 
-    public ShopDB() {
+    public ShopDb() {
         this.shop = null;  // Inicializa con un objeto Shop por defecto
         this.shopManager = ShopManager.getInstance();  // Inicializa con una instancia de ShopManager por defecto
     }
 
-    public ShopDB(Shop sh, ShopManager shManager) {
+    public ShopDb(Shop sh, ShopManager shManager) {
         this.shop = sh;
         this.shopManager = shManager;
     }
 
 
-    public static ShopDB getInstance() {
+    public static ShopDb getInstance() {
         if (instance == null) {
-            instance = new ShopDB();
+            instance = new ShopDb();
         }
         return instance;
     }
 
     public void leerShop() throws IOException {
-        ConexionFichero f = (ConexionFichero) FactoryBD.getConexionBD("TXT");
+        FileConnection f = (FileConnection) FactoryDb.getConexionBD("TXT");
         f.setNombre("Shop.txt");
         ShopManager shopManager = ShopManager.getInstance();
 
@@ -63,10 +61,10 @@ public class ShopDB {
                 String ticket = jsonShop.getString("Ticket");
 
                 // Crear una instancia de Shop con la información obtenida
-                Shop newShop = new Shop(nombre, catalogo, stock, ticket);
+                Shop newshop = new Shop(nombre, catalogo, stock, ticket);
 
                 // Agregar la tienda al ShopManager
-                shopManager.addShop(newShop);
+                shopManager.addShop(newshop);
             }
         } catch (JSONException e) {
             System.out.println("Error al procesar el contenido JSON del archivo Shop.txt: " + e.getMessage());

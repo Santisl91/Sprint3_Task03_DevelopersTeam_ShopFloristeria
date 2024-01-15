@@ -2,12 +2,12 @@ package persistence;
 
 import interfaces.IConexion;
 
-public class FactoryBD {
+public class FactoryDb {
 
 	public static IConexion getConexionBD(String tipo) {
 		switch (tipo) {
 			case "TXT": {
-				return new ConexionFichero();
+				return new FileConnection();
 			}
 
 			default: {

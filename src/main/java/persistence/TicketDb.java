@@ -9,31 +9,29 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-public class TicketDB {
+public class TicketDb {
 
-    private static TicketDB instance;
+    private static TicketDb instance;
     private Ticket ticketDB;
 
-    public TicketDB() {
+    public TicketDb() {
 
     }
-    public TicketDB(Ticket ticket){
+    public TicketDb(Ticket ticket){
         ticketDB = ticket;
     }
-    public static TicketDB getInstance(){
+    public static TicketDb getInstance(){
         if (instance == null) {
-            instance = new TicketDB();
+            instance = new TicketDb();
         }
         return instance;
     }
-
     public void leerBd(String filePath) throws IOException {
-        ConexionFichero f = (ConexionFichero) FactoryBD.getConexionBD("TXT");
+        FileConnection f = (FileConnection) FactoryDb.getConexionBD("TXT");
         f.setNombre(filePath);
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -54,18 +52,14 @@ public class TicketDB {
                 int quantity = ticketObject.get("quantity").asInt();
                 double totalPrice = ticketObject.get("totalPrice").asDouble();
 
-                // Crear un objeto Ticket con los datos leídos
                 Ticket ticket = new Ticket(ticketId, productId, productName, ticketDate, quantity, totalPrice);
 
-                // Agregar el ticket al TicketManager
                 TicketManager.getInstance().addTicket(ticket);
             }
         }
     }
-
-
     public void guardarBd(String filePath) throws IOException {
-        ConexionFichero f = (ConexionFichero) FactoryBD.getConexionBD("TXT");
+        FileConnection f = (FileConnection) FactoryDb.getConexionBD("TXT");
         f.setNombre(filePath);
         List<Ticket> tickets = TicketManager.getInstance().getTickets();
 
@@ -76,7 +70,7 @@ public class TicketDB {
             JSONObject ticketObject = new JSONObject();
             ticketObject.put("ticketId", ticket.getTicketId());
             ticketObject.put("productId", ticket.getProductId());
-            ticketObject.put("prductName", ticket.getProductName());
+            ticketObject.put("productName", ticket.getProductName());
             ticketObject.put("ticketDate", ticket.getTicketDate());
             ticketObject.put("quantity", ticket.getQuantity());
             ticketObject.put("totalPrice", ticket.getTotalPrice());
