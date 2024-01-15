@@ -1,9 +1,7 @@
 package entities;
 
-import app.Shop;
 import interfaces.Ipersistence;
-import persistence.CatalogoBD;
-import persistence.StockDB;
+import persistence.StockDb;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -12,13 +10,13 @@ import java.util.Map;
 public class Stock implements Ipersistence {
 
     private static Stock instance;
-    private StockDB stockDB;
+    private StockDb stockDB;
 
     private Map<Integer, Integer> stockItems;
 
     private Stock() {
         this.stockItems = new HashMap<>();
-        stockDB = new StockDB(this);
+        stockDB = new StockDb(this);
     }
 
     public static Stock getInstance() {
@@ -46,32 +44,30 @@ public class Stock implements Ipersistence {
             int currentQuantity = stockItems.get(productId);
 
             if (currentQuantity >= quantity) {
-                // Reducir la cantidad en stock
                 stockItems.put(productId, currentQuantity - quantity);
             } else {
-                System.out.println("Error: No hay suficiente stock disponible para el producto: " + product.getName());
+                System.out.println("Error: There is not enough stock available for the product: " + product.getName());
             }
         } else {
-            System.out.println("Error: Producto no encontrado en el stock.");
+            System.out.println("Error: Product not found in stock.");
         }
     }
     public void mostrarStockConCantidades() {
         Catalogue catalogue = Catalogue.getInstance();
 
-        System.out.println("\n--- Stock con cantidades de productos ---");
+        System.out.println("\n--- Stock with product quantities ---");
         for (Map.Entry<Integer, Integer> entry : stockItems.entrySet()) {
             int productId = entry.getKey();
             int quantity = entry.getValue();
             Product product = catalogue.getProductById(productId);
 
             if (product != null) {
-                System.out.println("- Producto: " + product.getName() + " - Cantidad: " + quantity);
+                System.out.println("- Product: " + product.getName() + " - Quantity: " + quantity);
             } else {
-                System.out.println("Producto con ID '" + productId + "' no encontrado en el catálogo.");
+                System.out.println("Product ID '" + productId + "' not found in the catalogue.");
             }
         }
     }
-
 
     @Override
     public void guardarCatalogo(String catalogoFileName) throws IOException {
@@ -80,7 +76,7 @@ public class Stock implements Ipersistence {
 
     @Override
     public void guardarStock(String stockFileName) throws IOException {
-        StockDB stock = new StockDB(this);
+        StockDb stock = new StockDb(this);
         stock.guardarBd(stockFileName);
     }
 
@@ -97,8 +93,8 @@ public class Stock implements Ipersistence {
 
     @Override
     public void leerStock(String stockFileName) throws IOException {
-        StockDB stockDB1 = StockDB.getInstance();
-        stockDB1.leerBd(stockFileName);
+        StockDb stockDb1 = StockDb.getInstance();
+        stockDb1.leerBd(stockFileName);
     }
 
     @Override

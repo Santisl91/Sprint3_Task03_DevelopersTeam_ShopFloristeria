@@ -1,7 +1,7 @@
 package entities;
 
 import interfaces.Ipersistence;
-import persistence.TicketDB;
+import persistence.TicketDb;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,7 +21,6 @@ public class TicketManager implements Ipersistence {
         }
         return instance;
     }
-
     public void addTicket(Ticket ticket) {
         tickets.add(ticket);
     }
@@ -34,35 +33,27 @@ public class TicketManager implements Ipersistence {
     public void guardarCatalogo(String catalogoFileName) throws IOException {
 
     }
-
     @Override
     public void guardarStock(String stockFileName) throws IOException {
 
     }
-
     @Override
     public void guardarTicket(String ticketFileName) throws IOException {
-        TicketDB ticketDB1 = TicketDB.getInstance();
-        ticketDB1.guardarBd(ticketFileName);
+        TicketDb ticketDb1 = TicketDb.getInstance();
+        ticketDb1.guardarBd(ticketFileName);
     }
-
     @Override
     public void leerCatalogo(String catalogoFileName) throws IOException {
 
     }
-
     @Override
     public void leerStock(String stockFileName) throws IOException {
 
     }
-
     @Override
     public void leerTicket(String ticketFileName) throws IOException {
-        TicketDB ticketDB = TicketDB.getInstance();
+        TicketDb ticketDB = TicketDb.getInstance();
         ticketDB.leerBd(ticketFileName);
     }
-
-
-    // Puedes agregar más métodos según tus necesidades, como eliminar un ticket, obtener un ticket específico, etc.
 }
 

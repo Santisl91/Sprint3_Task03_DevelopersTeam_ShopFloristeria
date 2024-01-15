@@ -1,7 +1,6 @@
 package entities;
 
 public class Decoration extends Product {
-
 	private String material;
 
 	public Decoration(String name, String material, double price) {
@@ -13,15 +12,12 @@ public class Decoration extends Product {
 		this(name, material, price);
 		this.setId(id);
 	}
-
 	public String getMaterial() {
 		return material;
 	}
-
 	public void setMaterial(String material) {
 		this.material = material;
 	}
-
 	@Override
 	public String toString() {
 		return "[id:" + getId() + ", material:" + material + ", Name:" + getName() + ", price:" + getPrice() + "]";

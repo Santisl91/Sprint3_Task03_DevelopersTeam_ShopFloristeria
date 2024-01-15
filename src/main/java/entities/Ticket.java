@@ -25,7 +25,6 @@ public class Ticket {
         this.productName = productName;
         this.ticketDate = new Date();
         this.quantity = quantity;
-        // Puedes calcular el precio total aquí o en otro método, dependiendo de tus necesidades
         this.totalPrice = calculateTotalPrice();
     }
 
@@ -35,12 +34,9 @@ public class Ticket {
     }
 
     private double calculateTotalPrice() {
-        // Implementa la lógica para calcular el precio total, según tus necesidades
-        // Puedes obtener el precio del producto desde otra fuente o utilizar una lógica específica
-        return 0.0;  // Reemplaza esto con tu lógica real
+        double productPrice = Catalogue.getInstance().getProductPriceById(productId);
+        return productPrice * quantity;
     }
-
-    // Métodos getter para acceder a los atributos del ticket
 
     public int getTicketId() {
         return ticketId;

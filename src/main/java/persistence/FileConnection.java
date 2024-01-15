@@ -10,12 +10,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class ConexionFichero implements IConexion {
+public class FileConnection implements IConexion {
 
 	private String camino;
 	private String nombre;
 
-	public ConexionFichero() {
+	public FileConnection() {
 	}
 
 	public String getCamino() {
@@ -42,12 +42,12 @@ public class ConexionFichero implements IConexion {
 			try {
 				jsonNode = objectMapper.readTree(new File(nombre));
 
-				System.out.println("Contenido JSON completo:");
+				System.out.println("Complete JSON content:");
 				System.out.println(jsonNode.toPrettyString());
 			} catch (IOException e) {
 				e.printStackTrace();
 
-				throw new RuntimeException("Error al leer el fichero ", e);
+				throw new RuntimeException("Error reading the file", e);
 			}
 		}
 		return jsonNode;
@@ -62,12 +62,12 @@ public class ConexionFichero implements IConexion {
 	}
 	@Override
 	public void conectar() {
-		System.out.println("Conectando a fichero " + this.nombre);
+		System.out.println("Connecting to file " + this.nombre);
 	}
 
 	@Override
 	public void desconectar() {
-		System.out.println("Desconectando de fichero " + this.nombre);
+		System.out.println("Disconnecting from file " + this.nombre);
 	}
 
 }

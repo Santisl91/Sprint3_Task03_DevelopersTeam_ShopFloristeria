@@ -12,27 +12,27 @@ import entities.Tree;
 import java.io.File;
 import java.io.IOException;
 
-public class CatalogoBD {
+public class CatalogueDb {
     private Catalogue catalogoDb;
-    private static CatalogoBD instance;
+    private static CatalogueDb instance;
 
-    public CatalogoBD() {
+    public CatalogueDb() {
 
     }
-    public CatalogoBD(Catalogue cat) {
+    public CatalogueDb(Catalogue cat) {
         catalogoDb = cat;
     }
 
-    public static CatalogoBD getInstance() {
+    public static CatalogueDb getInstance() {
         if (instance == null) {
-            instance = new CatalogoBD();
+            instance = new CatalogueDb();
         }
         return instance;
     }
 
     public Catalogue leerBd(String filePath) {
         JsonNode jsonNode;
-        ConexionFichero f = (ConexionFichero) FactoryBD.getConexionBD("TXT");
+        FileConnection f = (FileConnection) FactoryDb.getConexionBD("TXT");
         f.setNombre(filePath);
 
         File file = new File(f.getNombre());
@@ -68,14 +68,14 @@ public class CatalogoBD {
 
     public void guardarBd(String filePath) {
         if (this.catalogoDb != null) {
-        ConexionFichero f = (ConexionFichero) FactoryBD.getConexionBD("TXT");
-        f.setNombre(filePath);
-        JSONObject jsonCatalogo = new JSONObject();
-        jsonCatalogo.put(catalogoDb.getClass().toString(), catalogoDb.getItems());
-        f.write(jsonCatalogo);
+            FileConnection f = (FileConnection) FactoryDb.getConexionBD("TXT");
+            f.setNombre(filePath);
+            JSONObject jsonCatalogo = new JSONObject();
+            jsonCatalogo.put(catalogoDb.getClass().toString(), catalogoDb.getItems());
+            f.write(jsonCatalogo);
 
         } else {
-            System.out.println("Error: El objeto CatalogoDb es nulo y no puede ser guardado.");
+            System.out.println("Error: The CatalogDb object is null and cannot be saved.");
         }
     }
 }

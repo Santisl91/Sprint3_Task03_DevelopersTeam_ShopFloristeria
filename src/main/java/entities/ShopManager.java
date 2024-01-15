@@ -31,7 +31,7 @@ public class ShopManager {
                 return shop;
             }
         }
-        return null; // Si no se encuentra la tienda
+        return null;
     }
 
     public List<Shop> getShops() {
