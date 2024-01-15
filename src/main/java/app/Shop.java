@@ -59,7 +59,6 @@ public class Shop {
     }
     public void crearArchivosEnBlanco() {
         try {
-            // Crear archivos en blanco
             FileWriter catalogoWriter = new FileWriter(catalogueDbName);
             catalogoWriter.close();
 
@@ -69,9 +68,9 @@ public class Shop {
             FileWriter ticketWriter = new FileWriter(ticketDbName);
             ticketWriter.close();
 
-            System.out.println("Archivos en blanco creados para la tienda '" + name + "'.");
+            System.out.println("Blank files created for the store '" + name + "'.");
         } catch (IOException e) {
-            System.out.println("Error al crear archivos en blanco: " + e.getMessage());
+            System.out.println("Error creating blank files: " + e.getMessage());
         }
     }
 }

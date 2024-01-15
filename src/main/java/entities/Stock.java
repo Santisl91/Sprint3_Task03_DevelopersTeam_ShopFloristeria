@@ -1,5 +1,6 @@
 package entities;
 
+import app.Shop;
 import interfaces.Ipersistence;
 import persistence.StockDb;
 
@@ -28,9 +29,9 @@ public class Stock implements Ipersistence {
     public void removeProductById(int productId) {
         if (stockItems.containsKey(productId)) {
             stockItems.remove(productId);
-            System.out.println("Producto con ID '" + productId + "' eliminado del stock.");
+            System.out.println("Product ID '" + productId + "' removed from stock.");
         } else {
-            System.out.println("No se encontró el producto con ID '" + productId + "' en el stock.");
+            System.out.println("Product ID not found '" + productId + "' in stock.");
         }
     }
     public void setStockItems(Map<Integer, Integer> stockItems) {
@@ -60,6 +61,7 @@ public class Stock implements Ipersistence {
             System.out.println("Error: Product not found in stock.");
         }
     }
+    /*
     public void mostrarStockConCantidades() {
         Catalogue catalogue = Catalogue.getInstance();
 
@@ -76,7 +78,24 @@ public class Stock implements Ipersistence {
             }
         }
     }
+     */
+    public static void showStockWithQuantities() {
+        Stock stock = Stock.getInstance();
+        Catalogue catalogue = Catalogue.getInstance();
 
+        System.out.println("\n--- Stock with product quantities ---");
+        for (Map.Entry<Integer, Integer> entry : stock.getItems().entrySet()) {
+            int productId = entry.getKey();
+            int quantity = entry.getValue();
+            Product product = catalogue.getProductById(productId);
+
+            if (product != null) {
+                System.out.println("- Product ID: " + productId + " - Product: " + product.getName() + " - Quantity: " + quantity);
+            } else {
+                System.out.println("Product ID '" + productId + "' not found in the catalogue.");
+            }
+        }
+    }
 
     @Override
     public void guardarStock(String stockFileName) throws IOException {

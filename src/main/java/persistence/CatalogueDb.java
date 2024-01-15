@@ -50,7 +50,7 @@ public class CatalogueDb {
 
             if (cat != null) {
                 for (JsonNode prod : cat) {
-                    String tipo = prod.get("tipo").asText();
+                    String tipo = prod.get("type").asText();
                     if (tipo.equals(Flower.class.toString())) {
                         Flower fl = new Flower(prod.get("id").asInt(), prod.get("name").asText(), prod.get("color").asText(), prod.get("price").asDouble());
                         catalogoDb.addItem(fl);
@@ -66,10 +66,10 @@ public class CatalogueDb {
                     }
                 }
             } else {
-                System.out.println("Error: No se encontró la clave del catálogo en el archivo JSON.");
+                System.out.println("Error: Catalog key not found in JSON file.");
             }
         } else {
-            System.out.println("Error: El archivo JSON está vacío o no se pudo leer correctamente.");
+            System.out.println("Error: The JSON file is empty or could not be read correctly.");
         }
 
         return null;
