@@ -51,14 +51,14 @@ public class Main {
 
     private static void mostrarMenu() {
         System.out.println("\n--- Menu ---");
-        System.out.println("1. Add tree");
-        System.out.println("2. Add flower");
-        System.out.println("3. Add decoration");
-        System.out.println("4. Remove tree");
-        System.out.println("5. Remove flower");
-        System.out.println("6. Remove decoration");
+        System.out.println("1. Add tree.");
+        System.out.println("2. Add flower.");
+        System.out.println("3. Add decoration.");
+        System.out.println("4. Remove tree.");
+        System.out.println("5. Remove flower.");
+        System.out.println("6. Remove decoration.");
         System.out.println("7. Show all tickets");
-        System.out.println("8. Show stock with product quantities");
+        System.out.println("8. Show stock with product quantities.");
         System.out.println("9. Create Florist.");
         System.out.println("10. Create Ticket.");
         System.out.println("11. Total sales.");

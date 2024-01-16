@@ -1,9 +1,9 @@
 package entities;
 
 import app.Shop;
-import persistence.TicketDb;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 
 public class ProductItemFactory {
@@ -47,7 +47,7 @@ public class ProductItemFactory {
                 return null;
 
             case 8:
-                Stock.getInstance().showStockWithQuantities();
+                Stock.getInstance().showStockWithQuantities(shop);
                 return null;
 
             case 9:
@@ -60,8 +60,8 @@ public class ProductItemFactory {
 
 
             case 10:
-                showStockWithQuantities(shop);
-                construirTicket(shop, scanner, Catalogue.getInstance());
+                Stock.showStockWithQuantities(shop);
+                createTicket(shop, scanner, Catalogue.getInstance());
                 return null;
 
 
@@ -154,6 +154,56 @@ public class ProductItemFactory {
         }
         return decoration;
     }
+    private static void createTicket(Shop shop, Scanner scanner, Catalogue catalogo) {
+        List<Ticket> tickets = new ArrayList<>();
+
+        LocalDate currentDate = LocalDate.now();
+
+        do {
+            System.out.println("Enter the product ID (0 to finish adding products):");
+            int productId = scanner.nextInt();
+
+            if (productId == 0) {
+                break;
+            }
+
+            scanner.nextLine();
+            System.out.println("Enter the quantity:");
+            int quantity = scanner.nextInt();
+
+            Product product = catalogo.getProductById(productId);
+
+            if (product != null) {
+                int availableStock = Stock.getInstance().getItems().getOrDefault(productId, 0);
+
+                if (availableStock >= quantity) {
+                    String productName = product.getName();
+                    Ticket ticket = new Ticket(productId, productName, quantity, currentDate);
+                    tickets.add(ticket);
+                    System.out.println("Product added to the ticket.");
+
+                    Stock.getInstance().reduceStock(product, quantity);
+                } else {
+                    System.out.println("Error: Insufficient stock for Product ID '" + productId + "'. Available stock: " + availableStock);
+                }
+            } else {
+                System.out.println("Product ID '" + productId + "' not found in the catalogue.");
+            }
+        } while (true);
+
+        if (!tickets.isEmpty()) {
+            TicketManager ticketManager = TicketManager.getInstance();
+            tickets.forEach(ticketManager::addTicket);
+
+            System.out.println("Ticket created successfully:");
+            for (Ticket ticket : tickets) {
+                System.out.println(ticket);
+            }
+        } else {
+            System.out.println("No products added to the ticket.");
+        }
+    }
+
 
     private static void showAllTickets(Shop shop) {
         TicketManager ticketManager = TicketManager.getInstance();
@@ -182,84 +232,6 @@ public class ProductItemFactory {
                 System.out.println("------------------------");
             }
         }
-    }
-    private static void createTicket(Shop shop, Scanner scanner, Catalogue catalogo) throws IOException {
-        List<Ticket> tickets = new ArrayList<>();
-
-        ProductItemFactory.showStockWithQuantities(shop);
-
-        do {
-            System.out.println("Enter the product ID (0 to finish adding products):");
-            int productId = scanner.nextInt();
-
-            if (productId == 0) {
-                break;
-            }
-
-            scanner.nextLine();
-            System.out.println("Enter the quantity:");
-            int quantity = scanner.nextInt();
-
-            Product product = catalogo.getProductById(productId);
-
-            if (product != null) {
-                String productName = product.getName();
-                Ticket ticket = new Ticket(productId, productName, quantity);
-                tickets.add(ticket);
-                System.out.println("Product added to the ticket.");
-            } else {
-                System.out.println("Product ID '" + productId + "' not found in the catalogue.");
-            }
-        } while (true);
-
-        if (!tickets.isEmpty()) {
-            TicketManager ticketManager = TicketManager.getInstance();
-            tickets.forEach(ticketManager::addTicket);
-
-            System.out.println("Ticket created successfully:");
-            for (Ticket ticket : tickets) {
-                System.out.println(ticket);
-            }
-            ticketManager.guardarTicket(shop.getTicketDbName());
-        } else {
-            System.out.println("No products added to the ticket.");
-        }
-    }
-
-    public static void construirTicket(Shop shop, Scanner scanner, Catalogue catalogo) throws IOException {
-        // Crear lista para almacenar la información de productos
-        List<ProductInfo> productInfoList = new ArrayList<>();
-        TicketManager tM = TicketManager.getInstance();
-        // Solicitar al usuario la información del producto
-        while (true) {
-            System.out.print("Ingrese el ID del producto: ");
-            int productId = scanner.nextInt();
-
-            // Buscar el producto por el ID en el catálogo
-            Product product = catalogo.getProductById(productId);
-
-            if (product != null) {
-                String productName = product.getName();
-                System.out.print("Ingrese la cantidad para '" + productName + "': ");
-                int quantity = scanner.nextInt();
-
-                // Crear instancia de ProductInfo y agregarla a la lista
-                ProductInfo productInfo = new ProductInfo(product, quantity);
-                productInfoList.add(productInfo);
-
-                // Preguntar al usuario si desea seguir agregando productos
-                System.out.print("¿Desea agregar otro producto? (s/n): ");
-                char respuesta = scanner.next().charAt(0);
-                if (respuesta == 'n' || respuesta == 'N') {
-                    break;  // Salir del bucle si la respuesta es 'n' o 'N'
-                }
-            } else {
-                System.out.println("ID de producto no válido. Inténtelo de nuevo.");
-            }
-        }
-        TicketPrueba ticket = new TicketPrueba(productInfoList);
-        tM.addTicketPrueba(ticket);
-        tM.guardarTicket(shop.getTicketDbName());
     }
 
     private static void showTotalSales(Shop shop) {

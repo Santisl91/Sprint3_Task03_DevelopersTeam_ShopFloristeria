@@ -1,5 +1,5 @@
 package entities;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Ticket {
     private static int lastTicketId = 0;
@@ -7,11 +7,11 @@ public class Ticket {
     private int ticketId;
     private int productId;
     private String productName;
-    private Date ticketDate;
+    private LocalDate ticketDate;
     private int quantity;
     private double totalPrice;
 
-    public Ticket(int ticketId, int productId, String productName, Date ticketDate, int quantity, double totalPrice ) {
+    public Ticket(int ticketId, int productId, String productName, LocalDate ticketDate, int quantity, double totalPrice ) {
         this.ticketId = ticketId;
         this.productId = productId;
         this.productName = productName;
@@ -19,11 +19,11 @@ public class Ticket {
         this.quantity = quantity;
         this.totalPrice = totalPrice;
     }
-    public Ticket(int productId, String productName, int quantity) {
+    public Ticket(int productId, String productName, int quantity, LocalDate ticketDate) {
         this.ticketId = generateTicketId();
         this.productId = productId;
         this.productName = productName;
-        this.ticketDate = new Date();
+        this.ticketDate = ticketDate;
         this.quantity = quantity;
         this.totalPrice = calculateTotalPrice();
     }
@@ -50,7 +50,7 @@ public class Ticket {
         return productName;
     }
 
-    public Date getTicketDate() {
+    public LocalDate getTicketDate() {
         return ticketDate;
     }
 
