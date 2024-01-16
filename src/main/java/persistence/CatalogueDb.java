@@ -75,7 +75,6 @@ public class CatalogueDb {
         return null;
     }
 
-
     public void guardarBd(String filePath) {
         if (this.catalogoDb != null) {
             FileConnection f = (FileConnection) FactoryDb.getConexionBD("TXT");

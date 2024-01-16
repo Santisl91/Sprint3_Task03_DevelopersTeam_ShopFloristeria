@@ -61,25 +61,8 @@ public class Stock implements Ipersistence {
             System.out.println("Error: Product not found in stock.");
         }
     }
-    /*
-    public void mostrarStockConCantidades() {
-        Catalogue catalogue = Catalogue.getInstance();
 
-        System.out.println("\n--- Stock with product quantities ---");
-        for (Map.Entry<Integer, Integer> entry : stockItems.entrySet()) {
-            int productId = entry.getKey();
-            int quantity = entry.getValue();
-            Product product = catalogue.getProductById(productId);
-
-            if (product != null) {
-                System.out.println("- Product: " + product.getName() + " - Quantity: " + quantity);
-            } else {
-                System.out.println("Product ID '" + productId + "' not found in the catalogue.");
-            }
-        }
-    }
-     */
-    public static void showStockWithQuantities() {
+    public static void showStockWithQuantities(Shop shop) {
         Stock stock = Stock.getInstance();
         Catalogue catalogue = Catalogue.getInstance();
 
@@ -90,12 +73,14 @@ public class Stock implements Ipersistence {
             Product product = catalogue.getProductById(productId);
 
             if (product != null) {
-                System.out.println("- Product ID: " + productId + " - Product: " + product.getName() + " - Quantity: " + quantity);
+                System.out.println("- Product ID: " + productId + " - Product: " + product.getName() +
+                        " - Quantity: " + quantity);
             } else {
                 System.out.println("Product ID '" + productId + "' not found in the catalogue.");
             }
         }
     }
+
 
     @Override
     public void guardarStock(String stockFileName) throws IOException {

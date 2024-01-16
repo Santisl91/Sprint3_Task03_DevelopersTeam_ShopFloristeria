@@ -1,9 +1,39 @@
 {
+    "a": {
+        "Catalogue": "a.catalog.txt",
+        "Ticket": "a.stock.txt",
+        "Stock": "a.stock.txt",
+        "Name": "a"
+    },
+    "sol": {
+        "Catalogue": "sol.catalog.txt",
+        "Ticket": "sol.stock.txt",
+        "Stock": "sol.stock.txt",
+        "Name": "sol"
+    },
+    "b": {
+        "Catalogue": "b.catalog.txt",
+        "Ticket": "b.stock.txt",
+        "Stock": "b.stock.txt",
+        "Name": "b"
+    },
+    "c": {
+        "Catalogue": "c.catalog.txt",
+        "Ticket": "c.stock.txt",
+        "Stock": "c.stock.txt",
+        "Name": "c"
+    },
     "otraTienda": {
         "Nombre": "otraTienda",
         "Catalogo": "otraTienda.Catalogue.txt",
         "Ticket": "otraTienda.Ticket.txt",
         "Stock": "otraTienda.Stock.txt"
+    },
+    "bcn": {
+        "Catalogue": "bcn.catalog.txt",
+        "Ticket": "bcn.stock.txt",
+        "Stock": "bcn.stock.txt",
+        "Name": "bcn"
     },
     "pepe": {
         "Nombre": "pepe",

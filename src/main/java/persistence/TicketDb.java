@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
 
@@ -47,8 +47,8 @@ public class TicketDb {
                 int ticketId = ticketObject.get("ticketId").asInt();
                 int productId = ticketObject.get("productId").asInt();
                 String productName = ticketObject.get("productName").asText();
-                long creationDateMillis = ticketObject.get("ticketDate").asLong();
-                Date ticketDate = new Date(creationDateMillis);
+                String dateString = ticketObject.get("ticketDate").asText();
+                LocalDate ticketDate = LocalDate.parse(dateString);
                 int quantity = ticketObject.get("quantity").asInt();
                 double totalPrice = ticketObject.get("totalPrice").asDouble();
 
@@ -58,6 +58,7 @@ public class TicketDb {
             }
         }
     }
+
     public void guardarBd(String filePath) throws IOException {
         FileConnection f = (FileConnection) FactoryDb.getConexionBD("TXT");
         f.setNombre(filePath);
