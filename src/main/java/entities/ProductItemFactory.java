@@ -47,12 +47,12 @@ public class ProductItemFactory {
                 return null;
 
             case 8:
-                showStockWithQuantities(shop);
+                Stock.getInstance().showStockWithQuantities();
                 return null;
 
             case 9:
-                System.out.println("Crear nueva floristería.");
-                System.out.print("Ingrese el nombre de la floristería: ");
+                System.out.println("Create new florist.");
+                System.out.print("Enter the name of the florist: ");
                 String newFlowerShopName = scanner.nextLine();
                 ShopManager shopManager = ShopManager.getInstance();
                 shopManager.crearNuevaFloristeria(newFlowerShopName);
@@ -155,24 +155,6 @@ public class ProductItemFactory {
         return decoration;
     }
 
-    private static void showStockWithQuantities(Shop shop) {
-        Stock stock = Stock.getInstance();
-        Catalogue catalogue = Catalogue.getInstance();
-
-        System.out.println("\n--- Stock with product quantities ---");
-        for (Map.Entry<Integer, Integer> entry : stock.getItems().entrySet()) {
-            int productId = entry.getKey();
-            int quantity = entry.getValue();
-            Product product = catalogue.getProductById(productId);
-
-            if (product != null) {
-                System.out.println("- Product ID: " + productId + " - Product: " + product.getName() + " - Quantity: " + quantity);
-            } else {
-                System.out.println("Product ID '" + productId + "' not found in the catalogue.");
-            }
-        }
-    }
-
     private static void showAllTickets(Shop shop) {
         TicketManager ticketManager = TicketManager.getInstance();
 
@@ -201,34 +183,6 @@ public class ProductItemFactory {
             }
         }
     }
-    private static void showAllTicketsPrueba(Shop shop) {
-        TicketManager ticketManager = TicketManager.getInstance();
-
-        try {
-            ticketManager.leerTicket(shop.getTicketDbName());
-        } catch (IOException e) {
-            System.out.println("Error reading tickets: " + e.getMessage());
-            e.printStackTrace();
-            return;
-        }
-
-        List<TicketPrueba> ticketPrueba = ticketManager.getTicketsPrueba();
-
-        if (ticketPrueba.isEmpty()) {
-            System.out.println("There are no tickets available.");
-        } else {
-            System.out.println("\n--- All Tickets ---");
-            for (TicketPrueba ticket : ticketPrueba) {
-                System.out.println("Ticket ID: " + ticket.getTicketId());
-                System.out.println("Product ID: " + ticket.getProductId());
-                System.out.println("Product name: " + ticketPrueba.getProductName());
-                System.out.println("Ticket Date: " + ticketPrueba.getTicketDate());
-                System.out.println("Quantity: " + ticketPrueba.getQuantity());
-                System.out.println("Total Price: " + ticketPrueba.getTotalPrice());
-                System.out.println("------------------------");
-            }
-        }
-    }
     private static void createTicket(Shop shop, Scanner scanner, Catalogue catalogo) throws IOException {
         List<Ticket> tickets = new ArrayList<>();
 
@@ -239,10 +193,10 @@ public class ProductItemFactory {
             int productId = scanner.nextInt();
 
             if (productId == 0) {
-                break;  // Exit the loop if 0 is entered
+                break;
             }
 
-            scanner.nextLine(); // Consume the newline character
+            scanner.nextLine();
             System.out.println("Enter the quantity:");
             int quantity = scanner.nextInt();
 
@@ -335,3 +289,4 @@ public class ProductItemFactory {
         }
     }
 }
+

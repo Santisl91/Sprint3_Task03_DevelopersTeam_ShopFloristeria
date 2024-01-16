@@ -16,7 +16,7 @@ import persistence.TicketDb;
 
 public class ShopManager implements Ipersistence {
     private static ShopManager instance;
-    private Map<String, Shop> shopMap; // Utilizando el nombre de la tienda como clave
+    private Map<String, Shop> shopMap;
 
     private ShopManager() {
         this.shopMap = new HashMap<>();
@@ -40,16 +40,13 @@ public class ShopManager implements Ipersistence {
     }
     public Object crearNuevaFloristeria(String newFlowerShopName) throws IOException {
         if (shopMap.containsKey(newFlowerShopName)) {
-            System.out.println("Error: La floristería ya existe.");
+            System.out.println("Error: The florist already exists.");
         } else {
-            // Crear una nueva tienda
             Shop newShop = new Shop(newFlowerShopName);
 
-            // Guardar la nueva tienda y sus datos
             addShop(newShop);
             guardarShop(newShop);
 
-            // Crear archivos TXT asociados a la nueva floristería
             CatalogueDb newCatalogoBD = CatalogueDb.getInstance();
             newCatalogoBD.guardarBd(newShop.getCatalogueDbName());
 
@@ -59,7 +56,7 @@ public class ShopManager implements Ipersistence {
             TicketDb newTicketDB = TicketDb.getInstance();
             newTicketDB.guardarBd(newShop.getTicketDbName());
 
-            System.out.println("Nueva floristería creada: " + newShop.getName());
+            System.out.println("New florist created: " + newShop.getName());
         }
 
         return null;
@@ -68,11 +65,11 @@ public class ShopManager implements Ipersistence {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Lista de tiendas:\n");
+        sb.append("Store List:\n");
 
         for (Shop shop : shopMap.values()) {
-            sb.append("Nombre: ").append(shop.getName())
-                    .append(", Catálogo: ").append(shop.getCatalogueDbName())
+            sb.append("Name: ").append(shop.getName())
+                    .append(", Catalogue: ").append(shop.getCatalogueDbName())
                     .append(", Stock: ").append(shop.getStockDbName())
                     .append(", Ticket: ").append(shop.getTicketDbName())
                     .append("\n");

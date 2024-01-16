@@ -17,8 +17,8 @@ public class ShopDb {
     private static ShopDb instance;
 
     public ShopDb() {
-        this.shop = null;  // Inicializa con un objeto Shop por defecto
-        this.shopManager = ShopManager.getInstance();  // Inicializa con una instancia de ShopManager por defecto
+        this.shop = null;
+        this.shopManager = ShopManager.getInstance();
     }
 
     public ShopDb(Shop sh, ShopManager shManager) {
@@ -46,28 +46,22 @@ public class ShopDb {
                 jsonStringBuilder.append(line.trim());
             }
 
-            // Convertir el contenido del archivo a un objeto JSONObject
             JSONObject jsonShopObject = new JSONObject(jsonStringBuilder.toString());
 
-            // Iterar a través de las claves (nombres de tiendas) en el objeto JSON
             for (String shopKey : jsonShopObject.keySet()) {
-                // Obtener el objeto JSON asociado a la tienda actual
                 JSONObject jsonShop = jsonShopObject.getJSONObject(shopKey);
 
-                // Obtener los valores del objeto JSON
-                String nombre = jsonShop.getString("Nombre");
-                String catalogo = jsonShop.getString("Catalogo");
+                String nombre = jsonShop.getString("Name");
+                String catalogo = jsonShop.getString("Catalogue");
                 String stock = jsonShop.getString("Stock");
                 String ticket = jsonShop.getString("Ticket");
 
-                // Crear una instancia de Shop con la información obtenida
                 Shop newshop = new Shop(nombre, catalogo, stock, ticket);
 
-                // Agregar la tienda al ShopManager
                 shopManager.addShop(newshop);
             }
         } catch (JSONException e) {
-            System.out.println("Error al procesar el contenido JSON del archivo Shop.txt: " + e.getMessage());
+            System.out.println("Error processing JSON content of Shop.txt file: " + e.getMessage());
         }
     }
 
@@ -83,17 +77,17 @@ public class ShopDb {
         if (shop != null && shop.getName() != null) {
 
         JSONObject newShopJSON = new JSONObject();
-        newShopJSON.put("Nombre", shop.getName());
-        newShopJSON.put("Catalogo", shop.getCatalogueDbName());
+        newShopJSON.put("Name", shop.getName());
+        newShopJSON.put("Catalogue", shop.getCatalogueDbName());
         newShopJSON.put("Stock", shop.getStockDbName());
         newShopJSON.put("Ticket", shop.getTicketDbName());
 
         jsonShops.put(shop.getName(), newShopJSON);
         } else {
-            throw new IllegalArgumentException("El objeto 'shop' es nulo o tiene un nombre nulo.");
+            throw new IllegalArgumentException("The 'shop' object is null or has a null name.");
         }
         try (FileWriter file = new FileWriter("Shop.txt")) {
-            file.write(jsonShops.toString(4)); // Uso toString(4) para dar formato al JSON
+            file.write(jsonShops.toString(4));
         }
     }
 }
