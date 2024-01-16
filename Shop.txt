@@ -1,15 +1,20 @@
 {
-  "pepe": {
-    "Nombre": "pepe",
-    "Catalogo": "pepe.Catalogue.txt",
-    "Stock": "pepe.Stock.txt",
-    "Ticket": "pepe.Ticket.txt"
-  },
-  "otraTienda": {
-    "Nombre": "otraTienda",
-    "Catalogo": "otraTienda.Catalogue.txt",
-    "Stock": "otraTienda.Stock.txt",
-    "Ticket": "otraTienda.Ticket.txt"
-  }
-
+    "otraTienda": {
+        "Nombre": "otraTienda",
+        "Catalogo": "otraTienda.Catalogue.txt",
+        "Ticket": "otraTienda.Ticket.txt",
+        "Stock": "otraTienda.Stock.txt"
+    },
+    "pepe": {
+        "Nombre": "pepe",
+        "Catalogo": "pepe.Catalogue.txt",
+        "Ticket": "pepe.Ticket.txt",
+        "Stock": "pepe.Stock.txt"
+    },
+    "jaja": {
+        "Nombre": "jaja",
+        "Catalogo": "jaja.catalog.txt",
+        "Ticket": "jaja.stock.txt",
+        "Stock": "jaja.stock.txt"
+    }
 }

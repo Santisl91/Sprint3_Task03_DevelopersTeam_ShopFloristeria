@@ -71,7 +71,7 @@ public class ShopDb {
         }
     }
 
-    public void guardarShop() throws IOException {
+    public void guardarShop(Shop shop) throws IOException {
         JSONObject jsonShops = new JSONObject();
         try {
             String content = new String(Files.readAllBytes(Paths.get("Shop.txt")));

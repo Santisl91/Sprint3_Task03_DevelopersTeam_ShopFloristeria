@@ -46,7 +46,6 @@ public class Main {
             catalogo.guardarCatalogo(shop.getCatalogueDbName());
             stock.guardarStock(shop.getStockDbName());
             ticket.guardarTicket(shop.getTicketDbName());
-            shopManager.guardarShop();
         }
     }
 
@@ -99,7 +98,7 @@ public class Main {
                     selectedShop.setStockDbName(stockFileName);
                     selectedShop.setTicketDbName(ticketFileName);
 
-                    shopManager.guardarShop();
+                    shopManager.guardarShop(selectedShop);
 
                     CatalogueDb catalogueDb = CatalogueDb.getInstance();
                     catalogueDb.guardarBd(selectedShop.getCatalogueDbName());

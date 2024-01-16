@@ -7,6 +7,7 @@ public class Product {
     private static int contador = 1;
     private double price;
 
+
     public Product(String name, double price) {
         this.name = name;
         this.price = price;

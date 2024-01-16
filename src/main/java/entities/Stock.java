@@ -1,5 +1,6 @@
 package entities;
 
+import app.Shop;
 import interfaces.Ipersistence;
 import persistence.StockDb;
 
@@ -91,7 +92,7 @@ public class Stock implements Ipersistence {
 
 
     @Override
-    public void guardarShop() throws IOException {
+    public void guardarShop(Shop shop) throws IOException {
     }
     @Override
     public void guardarCatalogo(String catalogoFileName) throws IOException {

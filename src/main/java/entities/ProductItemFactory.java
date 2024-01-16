@@ -4,10 +4,7 @@ import app.Shop;
 import persistence.TicketDb;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.Scanner;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ProductItemFactory {
 
@@ -63,7 +60,8 @@ public class ProductItemFactory {
 
 
             case 10:
-                createTicket(shop, scanner, Catalogue.getInstance());
+                showStockWithQuantities(shop);
+                construirTicket(shop, scanner, Catalogue.getInstance());
                 return null;
 
 
@@ -203,9 +201,38 @@ public class ProductItemFactory {
             }
         }
     }
+    private static void showAllTicketsPrueba(Shop shop) {
+        TicketManager ticketManager = TicketManager.getInstance();
 
-    private static void createTicket(Shop shop, Scanner scanner, Catalogue catalogo) {
+        try {
+            ticketManager.leerTicket(shop.getTicketDbName());
+        } catch (IOException e) {
+            System.out.println("Error reading tickets: " + e.getMessage());
+            e.printStackTrace();
+            return;
+        }
+
+        List<TicketPrueba> ticketPrueba = ticketManager.getTicketsPrueba();
+
+        if (ticketPrueba.isEmpty()) {
+            System.out.println("There are no tickets available.");
+        } else {
+            System.out.println("\n--- All Tickets ---");
+            for (TicketPrueba ticket : ticketPrueba) {
+                System.out.println("Ticket ID: " + ticket.getTicketId());
+                System.out.println("Product ID: " + ticket.getProductId());
+                System.out.println("Product name: " + ticketPrueba.getProductName());
+                System.out.println("Ticket Date: " + ticketPrueba.getTicketDate());
+                System.out.println("Quantity: " + ticketPrueba.getQuantity());
+                System.out.println("Total Price: " + ticketPrueba.getTotalPrice());
+                System.out.println("------------------------");
+            }
+        }
+    }
+    private static void createTicket(Shop shop, Scanner scanner, Catalogue catalogo) throws IOException {
         List<Ticket> tickets = new ArrayList<>();
+
+        ProductItemFactory.showStockWithQuantities(shop);
 
         do {
             System.out.println("Enter the product ID (0 to finish adding products):");
@@ -239,9 +266,46 @@ public class ProductItemFactory {
             for (Ticket ticket : tickets) {
                 System.out.println(ticket);
             }
+            ticketManager.guardarTicket(shop.getTicketDbName());
         } else {
             System.out.println("No products added to the ticket.");
         }
+    }
+
+    public static void construirTicket(Shop shop, Scanner scanner, Catalogue catalogo) throws IOException {
+        // Crear lista para almacenar la información de productos
+        List<ProductInfo> productInfoList = new ArrayList<>();
+        TicketManager tM = TicketManager.getInstance();
+        // Solicitar al usuario la información del producto
+        while (true) {
+            System.out.print("Ingrese el ID del producto: ");
+            int productId = scanner.nextInt();
+
+            // Buscar el producto por el ID en el catálogo
+            Product product = catalogo.getProductById(productId);
+
+            if (product != null) {
+                String productName = product.getName();
+                System.out.print("Ingrese la cantidad para '" + productName + "': ");
+                int quantity = scanner.nextInt();
+
+                // Crear instancia de ProductInfo y agregarla a la lista
+                ProductInfo productInfo = new ProductInfo(product, quantity);
+                productInfoList.add(productInfo);
+
+                // Preguntar al usuario si desea seguir agregando productos
+                System.out.print("¿Desea agregar otro producto? (s/n): ");
+                char respuesta = scanner.next().charAt(0);
+                if (respuesta == 'n' || respuesta == 'N') {
+                    break;  // Salir del bucle si la respuesta es 'n' o 'N'
+                }
+            } else {
+                System.out.println("ID de producto no válido. Inténtelo de nuevo.");
+            }
+        }
+        TicketPrueba ticket = new TicketPrueba(productInfoList);
+        tM.addTicketPrueba(ticket);
+        tM.guardarTicket(shop.getTicketDbName());
     }
 
     private static void showTotalSales(Shop shop) {

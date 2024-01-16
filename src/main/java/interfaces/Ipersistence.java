@@ -1,10 +1,12 @@
 package interfaces;
 
+import app.Shop;
+
 import java.io.IOException;
 
 public interface Ipersistence {
 
-    void guardarShop() throws IOException;
+    void guardarShop(Shop shop) throws IOException;
     void guardarCatalogo(String catalogoFileName) throws IOException;
     void guardarStock(String stockFileName) throws IOException;
     void guardarTicket(String ticketFileName) throws IOException;

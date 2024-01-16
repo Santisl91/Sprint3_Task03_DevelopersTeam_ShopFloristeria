@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import app.Shop;
 import interfaces.Ipersistence;
 import persistence.CatalogueDb;
 
@@ -81,7 +82,7 @@ public class Catalogue implements Ipersistence {
     public void leerTicket(String ticketFileName) throws IOException {
     }
     @Override
-    public void guardarShop() throws IOException {
+    public void guardarShop(Shop shop) throws IOException {
     }
     @Override
     public void guardarStock(String stockFileName) throws IOException {

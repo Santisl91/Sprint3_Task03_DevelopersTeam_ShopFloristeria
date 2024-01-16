@@ -47,7 +47,7 @@ public class ShopManager implements Ipersistence {
 
             // Guardar la nueva tienda y sus datos
             addShop(newShop);
-            guardarShop();
+            guardarShop(newShop);
 
             // Crear archivos TXT asociados a la nueva floristería
             CatalogueDb newCatalogoBD = CatalogueDb.getInstance();
@@ -82,9 +82,9 @@ public class ShopManager implements Ipersistence {
     }
 
     @Override
-    public void guardarShop() throws IOException {
+    public void guardarShop(Shop newShop) throws IOException {
         ShopDb sh = new ShopDb();
-        sh.guardarShop();
+        sh.guardarShop(newShop);
     }
 
     @Override
