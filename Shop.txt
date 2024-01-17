@@ -1,50 +1,6 @@
-{
-    "a": {
-        "Catalogue": "a.catalog.txt",
-        "Ticket": "a.stock.txt",
-        "Stock": "a.stock.txt",
-        "Name": "a"
-    },
-    "sol": {
-        "Catalogue": "sol.catalog.txt",
-        "Ticket": "sol.stock.txt",
-        "Stock": "sol.stock.txt",
-        "Name": "sol"
-    },
-    "b": {
-        "Catalogue": "b.catalog.txt",
-        "Ticket": "b.stock.txt",
-        "Stock": "b.stock.txt",
-        "Name": "b"
-    },
-    "c": {
-        "Catalogue": "c.catalog.txt",
-        "Ticket": "c.stock.txt",
-        "Stock": "c.stock.txt",
-        "Name": "c"
-    },
-    "otraTienda": {
-        "Nombre": "otraTienda",
-        "Catalogo": "otraTienda.Catalogue.txt",
-        "Ticket": "otraTienda.Ticket.txt",
-        "Stock": "otraTienda.Stock.txt"
-    },
-    "bcn": {
-        "Catalogue": "bcn.catalog.txt",
-        "Ticket": "bcn.stock.txt",
-        "Stock": "bcn.stock.txt",
-        "Name": "bcn"
-    },
-    "pepe": {
-        "Nombre": "pepe",
-        "Catalogo": "pepe.Catalogue.txt",
-        "Ticket": "pepe.Ticket.txt",
-        "Stock": "pepe.Stock.txt"
-    },
-    "jaja": {
-        "Nombre": "jaja",
-        "Catalogo": "jaja.catalog.txt",
-        "Ticket": "jaja.stock.txt",
-        "Stock": "jaja.stock.txt"
-    }
-}
+{"santi": {
+    "Catalogue": "santi.catalog.txt",
+    "Ticket": "santi.ticket.txt",
+    "Stock": "santi.stock.txt",
+    "Name": "santi"
+}}

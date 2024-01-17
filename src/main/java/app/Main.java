@@ -1,13 +1,12 @@
 package app;
 
 import entities.*;
+import menu.ProductItemFactory;
 import persistence.CatalogueDb;
-import persistence.ShopDb;
 import persistence.StockDb;
 import persistence.TicketDb;
 
 import java.io.IOException;
-import java.lang.runtime.SwitchBootstraps;
 import java.util.Scanner;
 
 
@@ -18,13 +17,11 @@ public class Main {
     static Stock stock = Stock.getInstance();
     static TicketManager ticket = TicketManager.getInstance();
 
-    ShopDb shopDB = ShopDb.getInstance();
-
 
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
 
-        Shop shop = seleccionarFloristeria();
+        Decoration.Shop shop = seleccionarFloristeria();
 
         if (shop.getName() != null) {
 
@@ -66,7 +63,7 @@ public class Main {
 
     }
 
-    private static Shop seleccionarFloristeria() throws IOException {
+    private static Decoration.Shop seleccionarFloristeria() throws IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to the florist app.");
 
@@ -74,7 +71,7 @@ public class Main {
         shopManager.leerShop();
         System.out.println(shopManager.toString());
 
-        Shop selectedShop = null;
+        Decoration.Shop selectedShop = null;
 
         do {
             System.out.print("Enter the name of the florist: ");
@@ -88,11 +85,11 @@ public class Main {
                 String crearNueva = scanner.nextLine();
 
                 if (crearNueva.equalsIgnoreCase("y")) {
-                    selectedShop = new Shop(flowerShopName);
+                    selectedShop = new Decoration.Shop(flowerShopName);
 
                     String catalogoFileName = flowerShopName + ".catalog.txt";
                     String stockFileName = flowerShopName + ".stock.txt";
-                    String ticketFileName = flowerShopName + ".stock.txt";
+                    String ticketFileName = flowerShopName + ".ticket.txt";
 
                     selectedShop.setCatalogueDbName(catalogoFileName);
                     selectedShop.setStockDbName(stockFileName);
@@ -132,7 +129,5 @@ public class Main {
 
         return selectedShop;
     }
+
 }
-
-
-

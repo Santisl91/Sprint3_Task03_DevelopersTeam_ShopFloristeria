@@ -3,7 +3,7 @@ package entities;
 public class Product {
     private String name;
     private int id;
-    private String tipo;
+    private String type;
     private static int contador = 1;
     private double price;
 
@@ -15,11 +15,11 @@ public class Product {
     }
 
     public String getTipo() {
-        return tipo;
+        return type;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setTipo(String type) {
+        this.type= type;
     }
 
     public void setId(int id) {

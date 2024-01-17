@@ -50,7 +50,7 @@ public class CatalogueDb {
 
             if (cat != null) {
                 for (JsonNode prod : cat) {
-                    String tipo = prod.get("type").asText();
+                    String tipo = prod.get("tipo").asText();
                     if (tipo.equals(Flower.class.toString())) {
                         Flower fl = new Flower(prod.get("id").asInt(), prod.get("name").asText(), prod.get("color").asText(), prod.get("price").asDouble());
                         catalogoDb.addItem(fl);

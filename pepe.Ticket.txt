@@ -1,1 +1,0 @@
-{"tickets":[{"quantity":20,"productId":2,"totalPrice":600,"ticketId":1,"productName":"rosa","ticketDate":"Thu Jan 01 01:00:00 CET 1970"},{"quantity":20,"productId":3,"totalPrice":600,"ticketId":2,"productName":"deco1","ticketDate":"Thu Jan 01 01:00:00 CET 1970"}]}

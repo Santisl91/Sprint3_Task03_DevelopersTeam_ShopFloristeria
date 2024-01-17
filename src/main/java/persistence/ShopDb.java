@@ -1,6 +1,6 @@
 package persistence;
 
-import app.Shop;
+import entities.Decoration;
 import entities.ShopManager;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 
 public class ShopDb {
 
-    private Shop shop;
+    private Decoration.Shop shop;
     private ShopManager shopManager;
 
     private static ShopDb instance;
@@ -21,7 +21,7 @@ public class ShopDb {
         this.shopManager = ShopManager.getInstance();
     }
 
-    public ShopDb(Shop sh, ShopManager shManager) {
+    public ShopDb(Decoration.Shop sh, ShopManager shManager) {
         this.shop = sh;
         this.shopManager = shManager;
     }
@@ -56,7 +56,7 @@ public class ShopDb {
                 String stock = jsonShop.getString("Stock");
                 String ticket = jsonShop.getString("Ticket");
 
-                Shop newshop = new Shop(nombre, catalogo, stock, ticket);
+                Decoration.Shop newshop = new Decoration.Shop(nombre, catalogo, stock, ticket);
 
                 shopManager.addShop(newshop);
             }
@@ -65,7 +65,7 @@ public class ShopDb {
         }
     }
 
-    public void guardarShop(Shop shop) throws IOException {
+    public void guardarShop(Decoration.Shop shop) throws IOException {
         JSONObject jsonShops = new JSONObject();
         try {
             String content = new String(Files.readAllBytes(Paths.get("Shop.txt")));

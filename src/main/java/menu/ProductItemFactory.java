@@ -1,14 +1,16 @@
-package entities;
+package menu;
 
-import app.Shop;
+import entities.*;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class ProductItemFactory {
 
-    public static Object createCatalogItem(int itemType, Catalogue catalog, Shop shop) throws IOException {
+    public static Object createCatalogItem(int itemType, Catalogue catalog, Decoration.Shop shop) throws IOException {
         Scanner scanner = new Scanner(System.in);
 
         switch (itemType) {
@@ -80,7 +82,7 @@ public class ProductItemFactory {
         }
     }
 
-    private static Tree createTree(Catalogue catalog, Shop shop, Scanner scanner) throws IOException {
+    private static Tree createTree(Catalogue catalog, Decoration.Shop shop, Scanner scanner) throws IOException {
         System.out.println("Enter the name of the tree:");
         String treeName = scanner.nextLine();
         System.out.println("Enter the height of the tree:");
@@ -105,7 +107,7 @@ public class ProductItemFactory {
         return tree;
     }
 
-    private static Flower createFlower(Catalogue catalog, Shop shop, Scanner scanner) throws IOException {
+    private static Flower createFlower(Catalogue catalog, Decoration.Shop shop, Scanner scanner) throws IOException {
         System.out.println("Enter the name of the flower:");
         String flowerName = scanner.nextLine();
         System.out.println("Enter the color of the flower:");
@@ -130,7 +132,7 @@ public class ProductItemFactory {
         return flower;
     }
 
-    private static Decoration createDecoration(Catalogue catalog, Shop shop, Scanner scanner) throws IOException {
+    private static Decoration createDecoration(Catalogue catalog, Decoration.Shop shop, Scanner scanner) throws IOException {
         System.out.println("Enter the name of the decoration:");
         String decorationName = scanner.nextLine();
         System.out.println("Enter the decoration material:");
@@ -154,9 +156,10 @@ public class ProductItemFactory {
         }
         return decoration;
     }
-    private static void createTicket(Shop shop, Scanner scanner, Catalogue catalogo) {
-        List<Ticket> tickets = new ArrayList<>();
 
+    private static void createTicket(Decoration.Shop shop, Scanner scanner, Catalogue catalogo) throws IOException {
+        TicketManager ticketManager = TicketManager.getInstance();
+        List<Ticket> tickets = new ArrayList<>();
         LocalDate currentDate = LocalDate.now();
 
         do {
@@ -192,12 +195,11 @@ public class ProductItemFactory {
         } while (true);
 
         if (!tickets.isEmpty()) {
-            TicketManager ticketManager = TicketManager.getInstance();
             tickets.forEach(ticketManager::addTicket);
-
             System.out.println("Ticket created successfully:");
             for (Ticket ticket : tickets) {
                 System.out.println(ticket);
+                ticketManager.guardarTicket(shop.getTicketDbName());
             }
         } else {
             System.out.println("No products added to the ticket.");
@@ -205,7 +207,7 @@ public class ProductItemFactory {
     }
 
 
-    private static void showAllTickets(Shop shop) {
+    private static void showAllTickets(Decoration.Shop shop) {
         TicketManager ticketManager = TicketManager.getInstance();
 
         try {
@@ -234,7 +236,7 @@ public class ProductItemFactory {
         }
     }
 
-    private static void showTotalSales(Shop shop) {
+    private static void showTotalSales(Decoration.Shop shop) {
         System.out.println("Calculating total sales: ");
 
         TicketManager ticketManager = TicketManager.getInstance();
@@ -261,4 +263,7 @@ public class ProductItemFactory {
         }
     }
 }
+
+
+
 

@@ -1,6 +1,5 @@
 package entities;
 
-import app.Shop;
 import interfaces.Ipersistence;
 import persistence.TicketDb;
 
@@ -56,7 +55,7 @@ public class TicketManager implements Ipersistence {
     }
 
     @Override
-    public void guardarShop(Shop shop) throws IOException {
+    public void guardarShop(Decoration.Shop shop) throws IOException {
     }
 
     @Override
@@ -74,6 +73,7 @@ public class TicketManager implements Ipersistence {
     @Override
     public void leerStock(String stockFileName) throws IOException {
     }
+
 }
 
 
