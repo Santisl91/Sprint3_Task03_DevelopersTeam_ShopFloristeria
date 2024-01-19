@@ -1,6 +1,14 @@
-{"santi": {
-    "Catalogue": "santi.catalog.txt",
-    "Ticket": "santi.ticket.txt",
-    "Stock": "santi.stock.txt",
-    "Name": "santi"
-}}
+{
+    "santi": {
+        "Catalogue": "santi.catalog.txt",
+        "Ticket": "santi.ticket.txt",
+        "Stock": "santi.stock.txt",
+        "Name": "santi"
+    },
+    "roger": {
+        "Catalogue": "roger.catalog.txt",
+        "Ticket": "roger.ticket.txt",
+        "Stock": "roger.stock.txt",
+        "Name": "roger"
+    }
+}

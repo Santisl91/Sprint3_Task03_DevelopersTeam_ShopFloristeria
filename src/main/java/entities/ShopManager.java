@@ -5,14 +5,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import interfaces.Ipersistence;
-import persistence.CatalogueDb;
-import persistence.ShopDb;
-import persistence.StockDb;
-import persistence.TicketDb;
+import dataBases.CatalogueDb;
+import dataBases.ShopDb;
+import dataBases.StockDb;
+import dataBases.TicketDb;
 
 public class ShopManager implements Ipersistence {
     private static ShopManager instance;
-    private Map<String, Decoration.Shop> shopMap;
+    private Map<String, Shop> shopMap;
 
     private ShopManager() {
         this.shopMap = new HashMap<>();
@@ -25,20 +25,20 @@ public class ShopManager implements Ipersistence {
         return instance;
     }
 
-    public void addShop(Decoration.Shop shop) {
+    public void addShop(Shop shop) {
         shopMap.put(shop.getName(), shop);
     }
-    public Decoration.Shop getShop(String flowerShopName) {
+    public Shop getShop(String flowerShopName) {
         return shopMap.get(flowerShopName);
     }
-    public Map<String, Decoration.Shop> getItems() {
+    public Map<String, Shop> getItems() {
         return new HashMap<>(shopMap);
     }
     public Object crearNuevaFloristeria(String newFlowerShopName) throws IOException {
         if (shopMap.containsKey(newFlowerShopName)) {
             System.out.println("Error: The florist already exists.");
         } else {
-            Decoration.Shop newShop = new Decoration.Shop(newFlowerShopName);
+            Shop newShop = new Shop(newFlowerShopName);
 
             addShop(newShop);
             guardarShop(newShop);
@@ -63,7 +63,7 @@ public class ShopManager implements Ipersistence {
         StringBuilder sb = new StringBuilder();
         sb.append("Store List:\n");
 
-        for (Decoration.Shop shop : shopMap.values()) {
+        for (Shop shop : shopMap.values()) {
             sb.append("Name: ").append(shop.getName())
                     .append(", Catalogue: ").append(shop.getCatalogueDbName())
                     .append(", Stock: ").append(shop.getStockDbName())
@@ -75,7 +75,7 @@ public class ShopManager implements Ipersistence {
     }
 
     @Override
-    public void guardarShop(Decoration.Shop newShop) throws IOException {
+    public void guardarShop(Shop newShop) throws IOException {
         ShopDb sh = new ShopDb();
         sh.guardarShop(newShop);
     }

@@ -1,7 +1,7 @@
 package entities;
 
 import interfaces.Ipersistence;
-import persistence.TicketDb;
+import dataBases.TicketDb;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,7 +10,6 @@ import java.util.List;
 public class TicketManager implements Ipersistence {
     private static TicketManager instance;
     private List<Ticket> tickets;
-    private List<TicketPrueba> ticketsPrueba;
 
     private TicketManager() {
         tickets = new ArrayList<>();
@@ -27,15 +26,8 @@ public class TicketManager implements Ipersistence {
         tickets.add(ticket);
     }
 
-    public void addTicketPrueba(TicketPrueba ticketPrueba){
-        ticketsPrueba.add(ticketPrueba);
-    }
-
     public List<Ticket> getTickets() {
         return tickets;
-    }
-    public List<TicketPrueba> getTicketsPrueba() {
-        return ticketsPrueba;
     }
 
     @Override
@@ -55,7 +47,7 @@ public class TicketManager implements Ipersistence {
     }
 
     @Override
-    public void guardarShop(Decoration.Shop shop) throws IOException {
+    public void guardarShop(Shop shop) throws IOException {
     }
 
     @Override
