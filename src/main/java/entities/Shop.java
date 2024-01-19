@@ -57,7 +57,7 @@ public class Shop {
     public void setTicketDbName(String ticketDbName) {
         this.ticketDbName = ticketDbName;
     }
-    public void crearArchivosEnBlanco() {
+    public void crearArchivosEnBlanco(Shop shop ) {
         try {
             FileWriter catalogoWriter = new FileWriter(catalogueDbName);
             catalogoWriter.close();

@@ -88,24 +88,8 @@ public class Main {
                 if (crearNueva.equalsIgnoreCase("y")) {
                     selectedShop = new Shop(flowerShopName);
 
-                    String catalogoFileName = flowerShopName + ".catalog.txt";
-                    String stockFileName = flowerShopName + ".stock.txt";
-                    String ticketFileName = flowerShopName + ".ticket.txt";
-
-                    selectedShop.setCatalogueDbName(catalogoFileName);
-                    selectedShop.setStockDbName(stockFileName);
-                    selectedShop.setTicketDbName(ticketFileName);
-
                     shopManager.guardarShop(selectedShop);
-
-                    CatalogueDb catalogueDb = CatalogueDb.getInstance();
-                    catalogueDb.guardarBd(selectedShop.getCatalogueDbName());
-
-                    StockDb stockDB = StockDb.getInstance();
-                    stockDB.guardarBd(selectedShop.getStockDbName());
-
-                    TicketDb ticketDB = TicketDb.getInstance();
-                    ticketDB.guardarBd(selectedShop.getTicketDbName());
+                    selectedShop.crearArchivosEnBlanco(selectedShop);
 
                     System.out.println("New florist created: " + selectedShop.getName());
                 }
