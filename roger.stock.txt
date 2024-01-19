@@ -1,1 +1,0 @@
-{"stock":[{"quantity":30,"id":1},{"quantity":30,"id":2}]}
