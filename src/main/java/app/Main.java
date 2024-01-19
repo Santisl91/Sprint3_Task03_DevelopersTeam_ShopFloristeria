@@ -2,9 +2,9 @@ package app;
 
 import entities.*;
 import menu.ProductItemFactory;
-import persistence.CatalogueDb;
-import persistence.StockDb;
-import persistence.TicketDb;
+import dataBases.CatalogueDb;
+import dataBases.StockDb;
+import dataBases.TicketDb;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -21,7 +21,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
 
-        Decoration.Shop shop = seleccionarFloristeria();
+        Shop shop = seleccionarFloristeria();
 
         if (shop.getName() != null) {
 
@@ -54,16 +54,17 @@ public class Main {
         System.out.println("4. Remove tree.");
         System.out.println("5. Remove flower.");
         System.out.println("6. Remove decoration.");
-        System.out.println("7. Show all tickets");
-        System.out.println("8. Show stock with product quantities.");
-        System.out.println("9. Create Florist.");
-        System.out.println("10. Create Ticket.");
-        System.out.println("11. Total sales.");
+        System.out.println("7. Add Stock");
+        System.out.println("8. Show all tickets");
+        System.out.println("9. Show stock with product quantities.");
+        System.out.println("10. Create Florist.");
+        System.out.println("11. Create Ticket.");
+        System.out.println("12. Total sales.");
         System.out.println("0. Exit menu.");
 
     }
 
-    private static Decoration.Shop seleccionarFloristeria() throws IOException {
+    private static Shop seleccionarFloristeria() throws IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to the florist app.");
 
@@ -71,7 +72,7 @@ public class Main {
         shopManager.leerShop();
         System.out.println(shopManager.toString());
 
-        Decoration.Shop selectedShop = null;
+        Shop selectedShop = null;
 
         do {
             System.out.print("Enter the name of the florist: ");
@@ -85,7 +86,7 @@ public class Main {
                 String crearNueva = scanner.nextLine();
 
                 if (crearNueva.equalsIgnoreCase("y")) {
-                    selectedShop = new Decoration.Shop(flowerShopName);
+                    selectedShop = new Shop(flowerShopName);
 
                     String catalogoFileName = flowerShopName + ".catalog.txt";
                     String stockFileName = flowerShopName + ".stock.txt";

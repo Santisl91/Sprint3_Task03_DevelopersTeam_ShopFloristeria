@@ -1,9 +1,11 @@
-package persistence;
+package dataBases;
 
-import entities.Decoration;
+import entities.Shop;
 import entities.ShopManager;
+import menu.FactoryDb;
 import org.json.JSONException;
 import org.json.JSONObject;
+import persistence.FileConnection;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -11,7 +13,7 @@ import java.nio.file.Paths;
 
 public class ShopDb {
 
-    private Decoration.Shop shop;
+    private Shop shop;
     private ShopManager shopManager;
 
     private static ShopDb instance;
@@ -21,7 +23,7 @@ public class ShopDb {
         this.shopManager = ShopManager.getInstance();
     }
 
-    public ShopDb(Decoration.Shop sh, ShopManager shManager) {
+    public ShopDb(Shop sh, ShopManager shManager) {
         this.shop = sh;
         this.shopManager = shManager;
     }
@@ -56,7 +58,7 @@ public class ShopDb {
                 String stock = jsonShop.getString("Stock");
                 String ticket = jsonShop.getString("Ticket");
 
-                Decoration.Shop newshop = new Decoration.Shop(nombre, catalogo, stock, ticket);
+                Shop newshop = new Shop(nombre, catalogo, stock, ticket);
 
                 shopManager.addShop(newshop);
             }
@@ -65,7 +67,7 @@ public class ShopDb {
         }
     }
 
-    public void guardarShop(Decoration.Shop shop) throws IOException {
+    public void guardarShop(Shop shop) throws IOException {
         JSONObject jsonShops = new JSONObject();
         try {
             String content = new String(Files.readAllBytes(Paths.get("Shop.txt")));

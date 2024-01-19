@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class ProductItemFactory {
 
-    public static Object createCatalogItem(int itemType, Catalogue catalog, Decoration.Shop shop) throws IOException {
+    public static Object createCatalogItem(int itemType, Catalogue catalog, Shop shop) throws IOException {
         Scanner scanner = new Scanner(System.in);
 
         switch (itemType) {
@@ -28,6 +28,7 @@ public class ProductItemFactory {
                 System.out.println("Enter the ID of the tree to remove:");
                 int treeToRemove = scanner.nextInt();
                 catalog.removeProductById(treeToRemove);
+                catalog.guardarCatalogo(shop.getCatalogueDbName());
                 return null;
 
             case 5:
@@ -35,6 +36,7 @@ public class ProductItemFactory {
                 System.out.println("Enter the ID of the flower to collect:");
                 int flowerToRemove = scanner.nextInt();
                 catalog.removeProductById(flowerToRemove);
+                catalog.guardarCatalogo(shop.getCatalogueDbName());
                 return null;
 
             case 6:
@@ -42,17 +44,29 @@ public class ProductItemFactory {
                 System.out.println("Enter the ID of the decoration to be removed:");
                 int decorationToRemove = scanner.nextInt();
                 catalog.removeProductById(decorationToRemove);
+                catalog.guardarCatalogo(shop.getCatalogueDbName());
                 return null;
 
             case 7:
+                Stock stock = Stock.getInstance();
+                Stock.showStockWithQuantities(shop);
+                System.out.println("Enter the ID of the product you want to add stock:");
+                int idToAdd = scanner.nextInt();
+                System.out.println("Enter the new stock:");
+                int newStock = scanner.nextInt();
+                stock.setStockQuantityById(idToAdd,newStock);
+                stock.guardarStock(shop.getStockDbName());
+                return null;
+            case 8:
                 showAllTickets(shop);
                 return null;
 
-            case 8:
-                Stock.getInstance().showStockWithQuantities(shop);
+            case 9:
+                Stock.getInstance();
+                Stock.showStockWithQuantities(shop);
                 return null;
 
-            case 9:
+            case 10:
                 System.out.println("Create new florist.");
                 System.out.print("Enter the name of the florist: ");
                 String newFlowerShopName = scanner.nextLine();
@@ -61,13 +75,13 @@ public class ProductItemFactory {
                 return null;
 
 
-            case 10:
+            case 11:
                 Stock.showStockWithQuantities(shop);
                 createTicket(shop, scanner, Catalogue.getInstance());
                 return null;
 
 
-            case 11:
+            case 12:
                 showTotalSales(shop);
                 return null;
 
@@ -82,7 +96,7 @@ public class ProductItemFactory {
         }
     }
 
-    private static Tree createTree(Catalogue catalog, Decoration.Shop shop, Scanner scanner) throws IOException {
+    private static Tree createTree(Catalogue catalog,   Shop shop, Scanner scanner) throws IOException {
         System.out.println("Enter the name of the tree:");
         String treeName = scanner.nextLine();
         System.out.println("Enter the height of the tree:");
@@ -101,13 +115,15 @@ public class ProductItemFactory {
             int quantity = scanner.nextInt();
             StockItem stockItem = new StockItem(tree.getId(), quantity);
             stockTree.addStockItem(stockItem);
-            stockTree.guardarStock(shop.getStockDbName());
             System.out.println("Stock created.");
+        } else if (choice1 == 'N' || choice1 == 'n') {
+            Stock.createProductWithZeroQuantity(tree.getId());
         }
+        stockTree.guardarStock(shop.getStockDbName());
         return tree;
     }
 
-    private static Flower createFlower(Catalogue catalog, Decoration.Shop shop, Scanner scanner) throws IOException {
+    private static Flower createFlower(Catalogue catalog,  Shop shop, Scanner scanner) throws IOException {
         System.out.println("Enter the name of the flower:");
         String flowerName = scanner.nextLine();
         System.out.println("Enter the color of the flower:");
@@ -126,13 +142,15 @@ public class ProductItemFactory {
             int quantity = scanner.nextInt();
             StockItem stockItem = new StockItem(flower.getId(), quantity);
             stockFlower.addStockItem(stockItem);
-            stockFlower.guardarStock(shop.getStockDbName());
             System.out.println("Stock created.");
+        } else if (choice2 == 'N' || choice2 == 'n') {
+            Stock.createProductWithZeroQuantity(flower.getId());
         }
+        stockFlower.guardarStock(shop.getStockDbName());
         return flower;
     }
 
-    private static Decoration createDecoration(Catalogue catalog, Decoration.Shop shop, Scanner scanner) throws IOException {
+    private static Decoration createDecoration(Catalogue catalog, Shop shop, Scanner scanner) throws IOException {
         System.out.println("Enter the name of the decoration:");
         String decorationName = scanner.nextLine();
         System.out.println("Enter the decoration material:");
@@ -151,13 +169,15 @@ public class ProductItemFactory {
             int quantity = scanner.nextInt();
             StockItem stockItem = new StockItem(decoration.getId(), quantity);
             stockDeco.addStockItem(stockItem);
-            stockDeco.guardarStock(shop.getStockDbName());
             System.out.println("Stock created.");
+        } else if (choice3 == 'N' || choice3 == 'n') {
+            Stock.createProductWithZeroQuantity(decoration.getId());
         }
+        stockDeco.guardarStock(shop.getStockDbName());
         return decoration;
     }
 
-    private static void createTicket(Decoration.Shop shop, Scanner scanner, Catalogue catalogo) throws IOException {
+    private static void createTicket(Shop shop, Scanner scanner, Catalogue catalogo) throws IOException {
         TicketManager ticketManager = TicketManager.getInstance();
         List<Ticket> tickets = new ArrayList<>();
         LocalDate currentDate = LocalDate.now();
@@ -207,7 +227,7 @@ public class ProductItemFactory {
     }
 
 
-    private static void showAllTickets(Decoration.Shop shop) {
+    private static void showAllTickets(Shop shop) {
         TicketManager ticketManager = TicketManager.getInstance();
 
         try {
@@ -236,7 +256,7 @@ public class ProductItemFactory {
         }
     }
 
-    private static void showTotalSales(Decoration.Shop shop) {
+    private static void showTotalSales(Shop shop) {
         System.out.println("Calculating total sales: ");
 
         TicketManager ticketManager = TicketManager.getInstance();

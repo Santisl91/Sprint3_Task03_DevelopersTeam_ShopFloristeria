@@ -24,8 +24,6 @@ public class StockItem {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    public static StockItem createProductWithZeroQuantity(int productId) {
-        return new StockItem(productId, 0);
-    }
+
 
 }

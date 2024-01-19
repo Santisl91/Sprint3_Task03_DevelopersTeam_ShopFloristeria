@@ -1,1 +1,1 @@
-{"tickets":[{"quantity":20,"productId":1,"totalPrice":60,"ticketId":1,"productName":"pino","ticketDate":"2024-01-17"}]}
+{"tickets":[{"quantity":5,"productId":3,"totalPrice":150,"ticketId":1,"productName":"pino","ticketDate":"2024-01-18"}]}

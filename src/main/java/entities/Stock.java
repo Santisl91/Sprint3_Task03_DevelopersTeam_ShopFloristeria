@@ -1,7 +1,7 @@
 package entities;
 
 import interfaces.Ipersistence;
-import persistence.StockDb;
+import dataBases.StockDb;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -25,14 +25,6 @@ public class Stock implements Ipersistence {
         }
         return instance;
     }
-    public void removeProductById(int productId) {
-        if (stockItems.containsKey(productId)) {
-            stockItems.remove(productId);
-            System.out.println("Product ID '" + productId + "' removed from stock.");
-        } else {
-            System.out.println("Product ID not found '" + productId + "' in stock.");
-        }
-    }
     public void setStockItems(Map<Integer, Integer> stockItems) {
         this.stockItems = stockItems;
     }
@@ -45,7 +37,18 @@ public class Stock implements Ipersistence {
             stockItems.put(item.getProductId(), item.getQuantity());
         }
     }
-
+    public void setStockQuantityById(int productId, int quantity) {
+        if (stockItems.containsKey(productId)) {
+            stockItems.put(productId, quantity);
+        } else {
+            System.out.println("Error: Product ID '" + productId + "' not found in the stock.");
+        }
+    }
+    public static void createProductWithZeroQuantity(int productId) {
+        Stock stock = Stock.getInstance();
+        StockItem newStokItem = new StockItem(productId, 0);
+        stock.addStockItem(newStokItem);
+    }
     public void reduceStock(Product product, int quantity) {
         int productId = product.getId();
         if (stockItems.containsKey(productId)) {
@@ -61,7 +64,7 @@ public class Stock implements Ipersistence {
         }
     }
 
-    public static void showStockWithQuantities(Decoration.Shop shop) {
+    public static void showStockWithQuantities(Shop shop) {
         Stock stock = Stock.getInstance();
         Catalogue catalogue = Catalogue.getInstance();
 
@@ -94,7 +97,7 @@ public class Stock implements Ipersistence {
 
 
     @Override
-    public void guardarShop(Decoration.Shop shop) throws IOException {
+    public void guardarShop(Shop shop) throws IOException {
     }
     @Override
     public void guardarCatalogo(String catalogoFileName) throws IOException {
