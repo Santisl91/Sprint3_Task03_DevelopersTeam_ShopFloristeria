@@ -2,9 +2,6 @@ package app;
 
 import entities.*;
 import menu.ProductItemFactory;
-import dataBases.CatalogueDb;
-import dataBases.StockDb;
-import dataBases.TicketDb;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -24,20 +21,23 @@ public class Main {
         Shop shop = seleccionarFloristeria();
 
         if (shop.getName() != null) {
-
-            int eleccion;
+            int eleccion = -1;
 
             do {
                 mostrarMenu();
-                eleccion = scanner.nextInt();
-                scanner.nextLine();
+                String input = scanner.nextLine();
 
-                if (eleccion != 0) {
-                    Object nuevoItem = ProductItemFactory.createCatalogItem(eleccion, catalogo, shop);
+                if (input.matches("\\d+") && !input.contains(" ")) {
+                    eleccion = Integer.parseInt(input);
+
+                    if (eleccion != 0) {
+                        Object nuevoItem = ProductItemFactory.createCatalogItem(eleccion, catalogo, shop);
+                    } else {
+                        System.out.println("Closed program.");
+                    }
                 } else {
-                    System.out.println("Closed program.");
+                    System.out.println("Invalid option. Please enter a valid number without spaces.");
                 }
-
             } while (eleccion != 0);
 
             catalogo.guardarCatalogo(shop.getCatalogueDbName());
@@ -54,8 +54,8 @@ public class Main {
         System.out.println("4. Remove tree.");
         System.out.println("5. Remove flower.");
         System.out.println("6. Remove decoration.");
-        System.out.println("7. Add Stock");
-        System.out.println("8. Show all tickets");
+        System.out.println("7. Add Stock.");
+        System.out.println("8. Show all tickets.");
         System.out.println("9. Show stock with product quantities.");
         System.out.println("10. Create Florist.");
         System.out.println("11. Create Ticket.");

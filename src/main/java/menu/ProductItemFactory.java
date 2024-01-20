@@ -54,7 +54,7 @@ public class ProductItemFactory {
                 int idToAdd = scanner.nextInt();
                 System.out.println("Enter the new stock:");
                 int newStock = scanner.nextInt();
-                stock.setStockQuantityById(idToAdd,newStock);
+                stock.setStockQuantityById(idToAdd, newStock);
                 stock.guardarStock(shop.getStockDbName());
                 return null;
             case 8:
@@ -74,12 +74,10 @@ public class ProductItemFactory {
                 shopManager.crearNuevaFloristeria(newFlowerShopName);
                 return null;
 
-
             case 11:
                 Stock.showStockWithQuantities(shop);
                 createTicket(shop, scanner, Catalogue.getInstance());
                 return null;
-
 
             case 12:
                 showTotalSales(shop);
@@ -96,85 +94,77 @@ public class ProductItemFactory {
         }
     }
 
-    private static Tree createTree(Catalogue catalog,   Shop shop, Scanner scanner) throws IOException {
-        System.out.println("Enter the name of the tree:");
-        String treeName = scanner.nextLine();
-        System.out.println("Enter the height of the tree:");
-        String treeHeight = scanner.nextLine();
-        System.out.println("Enter the price of the tree:");
-        double treePrice = scanner.nextDouble();
-        Tree tree = new Tree(treeName, treeHeight, treePrice);
-        catalog.addItem(tree);
-        catalog.guardarCatalogo(shop.getCatalogueDbName());
-
-        Stock stockTree = Stock.getInstance();
-        System.out.println("Do you want to add stock? (Y/N)");
-        char choice1 = scanner.next().charAt(0);
-        if (choice1 == 'Y' || choice1 == 'y') {
-            System.out.println("Enter the quantity:");
-            int quantity = scanner.nextInt();
-            StockItem stockItem = new StockItem(tree.getId(), quantity);
-            stockTree.addStockItem(stockItem);
-            System.out.println("Stock created.");
-        } else if (choice1 == 'N' || choice1 == 'n') {
-            Stock.createProductWithZeroQuantity(tree.getId());
-        }
-        stockTree.guardarStock(shop.getStockDbName());
-        return tree;
+    private static Tree createTree(Catalogue catalog, Shop shop, Scanner scanner) throws IOException {
+        return createProduct("tree", catalog, shop, scanner);
     }
 
-    private static Flower createFlower(Catalogue catalog,  Shop shop, Scanner scanner) throws IOException {
-        System.out.println("Enter the name of the flower:");
-        String flowerName = scanner.nextLine();
-        System.out.println("Enter the color of the flower:");
-        String flowerColor = scanner.nextLine();
-        System.out.println("Enter the price of the flower:");
-        double flowerPrice = scanner.nextDouble();
-        Flower flower = new Flower(flowerName, flowerColor, flowerPrice);
-        catalog.addItem(flower);
-        catalog.guardarCatalogo(shop.getCatalogueDbName());
-
-        Stock stockFlower = Stock.getInstance();
-        System.out.println("Do you want to add stock? (Y/N)");
-        char choice2 = scanner.next().charAt(0);
-        if (choice2 == 'Y' || choice2 == 'y') {
-            System.out.println("Enter the quantity:");
-            int quantity = scanner.nextInt();
-            StockItem stockItem = new StockItem(flower.getId(), quantity);
-            stockFlower.addStockItem(stockItem);
-            System.out.println("Stock created.");
-        } else if (choice2 == 'N' || choice2 == 'n') {
-            Stock.createProductWithZeroQuantity(flower.getId());
-        }
-        stockFlower.guardarStock(shop.getStockDbName());
-        return flower;
+    private static Flower createFlower(Catalogue catalog, Shop shop, Scanner scanner) throws IOException {
+        return createProduct("flower", catalog, shop, scanner);
     }
 
     private static Decoration createDecoration(Catalogue catalog, Shop shop, Scanner scanner) throws IOException {
-        System.out.println("Enter the name of the decoration:");
-        String decorationName = scanner.nextLine();
-        System.out.println("Enter the decoration material:");
-        String decorationMaterial = scanner.nextLine();
-        System.out.println("Enter the price of the decoration:");
-        double decoPrice = scanner.nextDouble();
-        Decoration decoration = new Decoration(decorationName, decorationMaterial, decoPrice);
-        catalog.addItem(decoration);
-        catalog.guardarCatalogo(shop.getCatalogueDbName());
+        return createProduct("decoration", catalog, shop, scanner);
+    }
 
-        Stock stockDeco = Stock.getInstance();
-        System.out.println("Do you want to add stock? (Y/N)");
-        char choice3 = scanner.next().charAt(0);
-        if (choice3 == 'Y' || choice3 == 'y') {
-            System.out.println("Enter the quantity:");
-            int quantity = scanner.nextInt();
-            StockItem stockItem = new StockItem(decoration.getId(), quantity);
-            stockDeco.addStockItem(stockItem);
-            System.out.println("Stock created.");
-        } else if (choice3 == 'N' || choice3 == 'n') {
-            Stock.createProductWithZeroQuantity(decoration.getId());
+    private static <T extends Product> T createProduct(String productType, Catalogue catalog, Shop shop, Scanner scanner) throws IOException {
+        String productName = null;
+        T product = null;
+
+        if (productType.equals("tree")) {
+            System.out.println("Enter the name of the " + productType + ":");
+            productName = getValidInput("^[a-zA-Z]+$", "The name should not contain numbers, special characters, or spaces.", scanner);
+
+            System.out.println("Enter the height of the tree:");
+            double treeHeight = getValidDoubleInput("Invalid height. Please enter a number.", scanner);
+
+            System.out.println("Enter the price of the tree:");
+            double treePrice = getValidDoubleInput("Invalid price. Please enter a number.", scanner);
+
+            product = (T) new Tree(productName, treeHeight, treePrice);
+        } else if (productType.equals("flower")) {
+            System.out.println("Enter the name of the " + productType + ":");
+            productName = getValidInput("^[a-zA-Z]+$", "The name should not contain numbers, special characters, or spaces.", scanner);
+
+            System.out.println("Enter the color of the flower:");
+            String flowerColor = getValidInput("^[a-zA-Z]+$", "The color should not contain numbers, special characters, or spaces.", scanner);
+
+            System.out.println("Enter the price of the flower:");
+            double flowerPrice = getValidDoubleInput("Invalid price. Please enter a number.", scanner);
+
+            product = (T) new Flower(productName, flowerColor, flowerPrice);
+        } else if (productType.equals("decoration")) {
+            System.out.println("Enter the decoration material ('wood' or 'plastic'):");
+            String decorationMaterial = getValidInput("^(wood|plastic)$", "Invalid material. Please enter 'wood' or 'plastic'.", scanner);
+
+            System.out.println("Enter the price of the decoration:");
+            double decorationPrice = getValidDoubleInput("Invalid price. Please enter a number.", scanner);
+
+            product = (T) new Decoration(0, decorationMaterial, decorationPrice);
+            ((Decoration) product).setMaterial(decorationMaterial);
         }
-        stockDeco.guardarStock(shop.getStockDbName());
-        return decoration;
+
+        if (product != null) {
+            catalog.addItem(product);
+            catalog.guardarCatalogo(shop.getCatalogueDbName());
+
+            Stock stock = Stock.getInstance();
+            System.out.println("Do you want to add stock? (Y/N)");
+            char choice = getValidCharInput(scanner);
+
+            if (choice == 'Y' || choice == 'y') {
+                scanner.nextLine();
+
+                System.out.println("Enter the quantity:");
+                int quantity = getValidIntInput("Invalid quantity. Please enter a number.", scanner);
+                StockItem stockItem = new StockItem(product.getId(), quantity);
+                stock.addStockItem(stockItem);
+                System.out.println("Stock created.");
+            } else if (choice == 'N' || choice == 'n') {
+                Stock.createProductWithZeroQuantity(product.getId());
+            }
+            stock.guardarStock(shop.getStockDbName());
+        }
+        return product;
     }
 
     private static void createTicket(Shop shop, Scanner scanner, Catalogue catalogo) throws IOException {
@@ -281,6 +271,59 @@ public class ProductItemFactory {
             }
             System.out.println("Total sales: " + totalSales);
         }
+    }
+
+    private static String getValidInput(String pattern, String errorMessage, Scanner scanner) {
+        String input;
+        do {
+            input = scanner.nextLine().trim();
+            if (!input.matches(pattern) || input.isEmpty()) {
+                System.out.println(errorMessage);
+            }
+        } while (!input.matches(pattern) || input.isEmpty());
+        return input;
+    }
+
+    private static double getValidDoubleInput(String errorMessage, Scanner scanner) {
+        double input = 0;
+        while (true) {
+            String userInput = scanner.nextLine().trim();
+            try {
+                input = Double.parseDouble(userInput);
+                break;
+            } catch (NumberFormatException ex) {
+                System.out.println(errorMessage);
+            }
+        }
+        return input;
+    }
+
+    private static int getValidIntInput(String errorMessage, Scanner scanner) {
+        int input = 0;
+        while (true) {
+            String userInput = scanner.nextLine().trim();
+            try {
+                input = Integer.parseInt(userInput);
+                break;
+            } catch (NumberFormatException ex) {
+                System.out.println(errorMessage);
+            }
+        }
+        return input;
+    }
+
+
+    private static char getValidCharInput(Scanner scanner) {
+        char choice;
+        do {
+            choice = scanner.next().charAt(0);
+            if (Character.isLetter(choice)) {
+                choice = Character.toLowerCase(choice);
+            } else {
+                System.out.println("Invalid choice. Please enter 'Y' or 'N'.");
+            }
+        } while (choice != 'y' && choice != 'n');
+        return choice;
     }
 }
 

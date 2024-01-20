@@ -5,21 +5,25 @@ import java.io.IOException;
 
 public class Decoration extends Product {
 	private String material;
+	private static final String WOOD = "wood";
+	private static final String PLASTIC = "plastic";
 
-	public Decoration(String name, String material, double price) {
-		super(name, price);
-		this.material = material;
-		this.setTipo(Decoration.class.toString());
+	public Decoration(int id, String material, double price) {
+		super("", price);
+		setId(id);
+		setMaterial(material);
+		setTipo(Decoration.class.toString());
 	}
-	public Decoration(int id, String name, String material, double price) {
-		this(name, material, price);
-		this.setId(id);
-	}
+
 	public String getMaterial() {
 		return material;
 	}
 	public void setMaterial(String material) {
-		this.material = material;
+		if (WOOD.equals(material) || PLASTIC.equals(material)) {
+			this.material = material;
+		} else {
+			throw new IllegalArgumentException("Invalid material. Must be 'wood' or 'plastic'.");
+		}
 	}
 	@Override
 	public String toString() {
