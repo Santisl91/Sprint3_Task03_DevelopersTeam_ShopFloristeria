@@ -58,7 +58,8 @@ public class CatalogueDb {
                         catalogoDb.addItem(fl);
 
                     } else if (tipo.equals(Tree.class.toString())) {
-                        Tree tr = new Tree(prod.get("id").asInt(), prod.get("name").asText(), prod.get("height").asText(), prod.get("price").asDouble());
+                        Tree tr = new Tree(prod.get("id").asInt(), prod.get("name").asText(), prod.get("height").asDouble(), prod.get("price").asDouble());
+
                         catalogoDb.addItem(tr);
 
                     } else if (tipo.equals(Decoration.class.toString())) {

@@ -1,6 +1,3 @@
-{"Santi": {
-    "Catalogue": "Santi.Catalogue.txt",
-    "Ticket": "Santi.Ticket.txt",
-    "Stock": "Santi.Stock.txt",
-    "Name": "Santi"
-}}
+{
+
+}

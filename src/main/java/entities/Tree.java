@@ -2,24 +2,24 @@ package entities;
 
 public class Tree extends Product {
 
-	private String height;
+	private double height;
 
-	public Tree(String name, String height, double price) {
+	public Tree(String name, double height, double price) {
 		super(name, price);
 		this.height = height;
 		this.setTipo(Tree.class.toString());
 	}
 
-	public Tree(int id, String name, String height, double price) {
+	public Tree(int id, String name, double height, double price) {
 		this(name, height, price);
 		this.setId(id);
 	}
 
-	public String getHeight() {
+	public double getHeight() {
 		return height;
 	}
 
-	public void setHeight(String height) {
+	public void setHeight(double height) {
 		this.height = height;
 	}
 

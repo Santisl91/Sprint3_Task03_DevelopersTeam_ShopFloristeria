@@ -2,9 +2,6 @@ package app;
 
 import entities.*;
 import menu.ProductItemFactory;
-import dataBases.CatalogueDb;
-import dataBases.StockDb;
-import dataBases.TicketDb;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -25,19 +22,23 @@ public class Main {
 
         if (shop.getName() != null) {
 
-            int eleccion;
+            int eleccion = -1;
 
             do {
                 mostrarMenu();
-                eleccion = scanner.nextInt();
-                scanner.nextLine();
+                String input = scanner.nextLine();
 
-                if (eleccion != 0) {
-                    Object nuevoItem = ProductItemFactory.createCatalogItem(eleccion, catalogo, shop);
+                if (input.matches("\\d+") && !input.contains(" ")) {
+                    eleccion = Integer.parseInt(input);
+
+                    if (eleccion != 0) {
+                        Object nuevoItem = ProductItemFactory.createCatalogItem(eleccion, catalogo, shop);
+                    } else {
+                        System.out.println("Closed program.");
+                    }
                 } else {
-                    System.out.println("Closed program.");
+                    System.out.println("Invalid option. Please enter a valid number without spaces.");
                 }
-
             } while (eleccion != 0);
 
             catalogo.guardarCatalogo(shop.getCatalogueDbName());
@@ -54,8 +55,8 @@ public class Main {
         System.out.println("4. Remove tree.");
         System.out.println("5. Remove flower.");
         System.out.println("6. Remove decoration.");
-        System.out.println("7. Add Stock");
-        System.out.println("8. Show all tickets");
+        System.out.println("7. Add Stock.");
+        System.out.println("8. Show all tickets.");
         System.out.println("9. Show stock with product quantities.");
         System.out.println("10. Create Florist.");
         System.out.println("11. Create Ticket.");
@@ -78,6 +79,12 @@ public class Main {
             System.out.print("Enter the name of the florist: ");
             String flowerShopName = scanner.nextLine();
 
+
+            if (!flowerShopName.matches("^[a-zA-Z\\s]+$") || flowerShopName.trim().isEmpty()) {
+                System.out.println("Invalid florist name. The name should only contain letters and cannot be empty.");
+                continue;
+            }
+
             selectedShop = shopManager.getShop(flowerShopName);
 
             if (selectedShop == null) {
@@ -94,7 +101,7 @@ public class Main {
                     System.out.println("New florist created: " + selectedShop.getName());
                 }
             } else {
-                System.out.println("Selected florista: " + selectedShop.getName());
+                System.out.println("Selected florist: " + selectedShop.getName());
 
                 try {
                     catalogo.leerCatalogo(selectedShop.getCatalogueDbName());
@@ -108,11 +115,9 @@ public class Main {
                 break;
             }
 
-
             System.out.println("");
         } while (selectedShop == null);
 
         return selectedShop;
     }
-
 }
