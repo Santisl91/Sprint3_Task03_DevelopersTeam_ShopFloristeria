@@ -1,1 +1,0 @@
-{"class entities.Catalogue":[{"tipo":"class entities.Tree","price":5,"name":"lo","id":1,"height":5},{"tipo":"class entities.Flower","color":"gt","price":5,"name":"gt","id":2},{"tipo":"class entities.Decoration","material":"plastic","price":5,"name":"","id":0}]}
