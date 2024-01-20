@@ -69,16 +69,26 @@ public class Stock implements Ipersistence {
         Catalogue catalogue = Catalogue.getInstance();
 
         System.out.println("\n--- Stock with product quantities ---");
+        int startingProductId = 1;
         for (Map.Entry<Integer, Integer> entry : stock.getItems().entrySet()) {
-            int productId = entry.getKey();
+            int productId = startingProductId++;
             int quantity = entry.getValue();
-            Product product = catalogue.getProductById(productId);
+            Product product = catalogue.getProductById(entry.getKey());
 
             if (product != null) {
-                System.out.println("- Product ID: " + productId + " - Product: " + product.getName() +
-                        " - Quantity: " + quantity);
+                System.out.print("- Product ID: " + productId);
+
+                if (product instanceof Tree || product instanceof Flower) {
+                    System.out.print(" - Product: " + product.getName());
+                }
+
+                if (product instanceof Decoration) {
+                    System.out.print(" - Material: " + ((Decoration) product).getMaterial());
+                }
+
+                System.out.println(" - Quantity: " + quantity);
             } else {
-                System.out.println("Product ID '" + productId + "' not found in the catalogue.");
+                System.out.println("Product ID '" + entry.getKey() + "' not found in the catalogue.");
             }
         }
     }

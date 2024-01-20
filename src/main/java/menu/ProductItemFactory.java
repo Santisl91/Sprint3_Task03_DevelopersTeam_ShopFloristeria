@@ -133,13 +133,14 @@ public class ProductItemFactory {
 
             product = (T) new Flower(productName, flowerColor, flowerPrice);
         } else if (productType.equals("decoration")) {
-            System.out.println("Enter the decoration material ('madera' or 'plástico'):");
-            String decorationMaterial = getValidInput("^(madera|plástico)$", "Invalid material. Please enter 'madera' or 'plástico'.", scanner);
+            System.out.println("Enter the decoration material ('wood' or 'plastic'):");
+            String decorationMaterial = getValidInput("^(wood|plastic)$", "Invalid material. Please enter 'wood' or 'plastic'.", scanner);
 
             System.out.println("Enter the price of the decoration:");
             double decorationPrice = getValidDoubleInput("Invalid price. Please enter a number.", scanner);
 
-            product = (T) new Decoration(productName, decorationMaterial, decorationPrice);
+            product = (T) new Decoration(0, decorationMaterial, decorationPrice);
+            ((Decoration) product).setMaterial(decorationMaterial);
         }
 
         if (product != null) {

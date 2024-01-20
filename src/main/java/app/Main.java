@@ -21,7 +21,6 @@ public class Main {
         Shop shop = seleccionarFloristeria();
 
         if (shop.getName() != null) {
-
             int eleccion = -1;
 
             do {
@@ -79,12 +78,6 @@ public class Main {
             System.out.print("Enter the name of the florist: ");
             String flowerShopName = scanner.nextLine();
 
-
-            if (!flowerShopName.matches("^[a-zA-Z\\s]+$") || flowerShopName.trim().isEmpty()) {
-                System.out.println("Invalid florist name. The name should only contain letters and cannot be empty.");
-                continue;
-            }
-
             selectedShop = shopManager.getShop(flowerShopName);
 
             if (selectedShop == null) {
@@ -101,7 +94,7 @@ public class Main {
                     System.out.println("New florist created: " + selectedShop.getName());
                 }
             } else {
-                System.out.println("Selected florist: " + selectedShop.getName());
+                System.out.println("Selected florista: " + selectedShop.getName());
 
                 try {
                     catalogo.leerCatalogo(selectedShop.getCatalogueDbName());
@@ -115,9 +108,11 @@ public class Main {
                 break;
             }
 
+
             System.out.println("");
         } while (selectedShop == null);
 
         return selectedShop;
     }
+
 }

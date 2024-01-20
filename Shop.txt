@@ -1,3 +1,32 @@
 {
-
+    "que": {
+        "Catalogue": "que.Catalogue.txt",
+        "Ticket": "que.Ticket.txt",
+        "Stock": "que.Stock.txt",
+        "Name": "que"
+    },
+    "a": {
+        "Catalogue": "a.Catalogue.txt",
+        "Ticket": "a.Ticket.txt",
+        "Stock": "a.Stock.txt",
+        "Name": "a"
+    },
+    "oli": {
+        "Catalogue": "oli.Catalogue.txt",
+        "Ticket": "oli.Ticket.txt",
+        "Stock": "oli.Stock.txt",
+        "Name": "oli"
+    },
+    "lion": {
+        "Catalogue": "lion.Catalogue.txt",
+        "Ticket": "lion.Ticket.txt",
+        "Stock": "lion.Stock.txt",
+        "Name": "lion"
+    },
+    "mar": {
+        "Catalogue": "mar.Catalogue.txt",
+        "Ticket": "mar.Ticket.txt",
+        "Stock": "mar.Stock.txt",
+        "Name": "mar"
+    }
 }

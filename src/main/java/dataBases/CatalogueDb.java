@@ -63,9 +63,8 @@ public class CatalogueDb {
                         catalogoDb.addItem(tr);
 
                     } else if (tipo.equals(Decoration.class.toString())) {
-                        Decoration dc = new Decoration(prod.get("id").asInt(), prod.get("name").asText(), prod.get("material").asText(), prod.get("price").asDouble());
+                        Decoration dc = new Decoration(prod.get("id").asInt(), prod.get("material").asText(), prod.get("price").asDouble());
                         catalogoDb.addItem(dc);
-
                     }
                 }
             } else {
